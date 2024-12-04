@@ -1,11 +1,10 @@
-import { Footer } from '@/components/footer'
 import Header from '@/components/header'
 import { AppWrapper } from '@/context/app'
 import { LanguageContextProvider } from '@/context/language'
 import type { Language } from '@/types/languages'
 import { getDictionary } from '@/utils/dictionaries'
 
-import { SUPPORTED_LANGUAGES } from '../../../languages'
+import { SUPPORTED_LANGUAGES } from '../../../../languages'
 
 export async function generateStaticParams() {
   return SUPPORTED_LANGUAGES.map((lang) => ({ lang: lang.value }))
@@ -33,8 +32,6 @@ export default async function RootLayout({
           <Header />
 
           {children}
-
-          <Footer />
         </main>
       </LanguageContextProvider>
     </AppWrapper>

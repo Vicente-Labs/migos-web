@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import localFont from 'next/font/local'
 
+import { Footer } from '@/components/footer'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
 import type { Language } from '@/types/languages'
@@ -61,6 +62,7 @@ export default async function RootLayout({
           theme="light"
         />
         {children}
+        <Footer />
       </body>
     </html>
   )
