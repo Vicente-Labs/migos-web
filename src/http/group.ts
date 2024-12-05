@@ -5,11 +5,6 @@
  * API documentation for Migos
  * OpenAPI spec version: 0.0.0
  */
-import {
-  useMutation,
-  useQuery,
-  useSuspenseQuery
-} from '@tanstack/react-query'
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -23,8 +18,11 @@ import type {
   UseQueryOptions,
   UseQueryResult,
   UseSuspenseQueryOptions,
-  UseSuspenseQueryResult
+  UseSuspenseQueryResult,
 } from '@tanstack/react-query'
+import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query'
+
+import { axiosInstance } from '../services/axios-instance'
 import type {
   DeleteGroupsGroupId200,
   DeleteGroupsGroupId400,
@@ -59,715 +57,1226 @@ import type {
   PostGroups400,
   PostGroups401,
   PostGroups500,
-  PostGroupsBody
+  PostGroupsBody,
 } from './endpoints.schemas'
-import { axiosInstance } from '../services/axios-instance';
-
-
-
 
 /**
  * @summary Create a group
  */
 export const postGroups = (
-    postGroupsBody: PostGroupsBody,
- signal?: AbortSignal
+  postGroupsBody: PostGroupsBody,
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return axiosInstance<PostGroups201>(
-      {url: `/groups`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: postGroupsBody, signal
-    },
-      );
-    }
-  
+  return axiosInstance<PostGroups201>({
+    url: `/groups`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: postGroupsBody,
+    signal,
+  })
+}
 
+export const getPostGroupsMutationOptions = <
+  TError = PostGroups400 | PostGroups401 | PostGroups500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postGroups>>,
+    TError,
+    { data: PostGroupsBody },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postGroups>>,
+  TError,
+  { data: PostGroupsBody },
+  TContext
+> => {
+  const { mutation: mutationOptions } = options ?? {}
 
-export const getPostGroupsMutationOptions = <TError = PostGroups400 | PostGroups401 | PostGroups500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postGroups>>, TError,{data: PostGroupsBody}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof postGroups>>, TError,{data: PostGroupsBody}, TContext> => {
-const {mutation: mutationOptions} = options ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postGroups>>,
+    { data: PostGroupsBody }
+  > = (props) => {
+    const { data } = props ?? {}
 
-      
+    return postGroups(data)
+  }
 
+  return { mutationFn, ...mutationOptions }
+}
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postGroups>>, {data: PostGroupsBody}> = (props) => {
-          const {data} = props ?? {};
+export type PostGroupsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postGroups>>
+>
+export type PostGroupsMutationBody = PostGroupsBody
+export type PostGroupsMutationError =
+  | PostGroups400
+  | PostGroups401
+  | PostGroups500
 
-          return  postGroups(data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PostGroupsMutationResult = NonNullable<Awaited<ReturnType<typeof postGroups>>>
-    export type PostGroupsMutationBody = PostGroupsBody
-    export type PostGroupsMutationError = PostGroups400 | PostGroups401 | PostGroups500
-
-    /**
+/**
  * @summary Create a group
  */
-export const usePostGroups = <TError = PostGroups400 | PostGroups401 | PostGroups500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postGroups>>, TError,{data: PostGroupsBody}, TContext>, }
-): UseMutationResult<
-        Awaited<ReturnType<typeof postGroups>>,
-        TError,
-        {data: PostGroupsBody},
-        TContext
-      > => {
+export const usePostGroups = <
+  TError = PostGroups400 | PostGroups401 | PostGroups500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postGroups>>,
+    TError,
+    { data: PostGroupsBody },
+    TContext
+  >
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postGroups>>,
+  TError,
+  { data: PostGroupsBody },
+  TContext
+> => {
+  const mutationOptions = getPostGroupsMutationOptions(options)
 
-      const mutationOptions = getPostGroupsMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions)
+}
+/**
  * @summary Fetch groups
  */
-export const getGroups = (
-    params?: GetGroupsParams,
- signal?: AbortSignal
-) => {
-      
-      
-      return axiosInstance<GetGroups200>(
-      {url: `/groups`, method: 'GET',
-        params, signal
-    },
-      );
-    }
-  
-
-export const getGetGroupsQueryKey = (params?: GetGroupsParams,) => {
-    return [`/groups`, ...(params ? [params]: [])] as const;
-    }
-
-    
-export const getGetGroupsQueryOptions = <TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(params?: GetGroupsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetGroupsQueryKey(params);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroups>>> = ({ signal }) => getGroups(params, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+export const getGroups = (params?: GetGroupsParams, signal?: AbortSignal) => {
+  return axiosInstance<GetGroups200>({
+    url: `/groups`,
+    method: 'GET',
+    params,
+    signal,
+  })
 }
 
-export type GetGroupsQueryResult = NonNullable<Awaited<ReturnType<typeof getGroups>>>
+export const getGetGroupsQueryKey = (params?: GetGroupsParams) => {
+  return [`/groups`, ...(params ? [params] : [])] as const
+}
+
+export const getGetGroupsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params?: GetGroupsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+    >
+  },
+) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetGroupsQueryKey(params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroups>>> = ({
+    signal,
+  }) => getGroups(params, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getGroups>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetGroupsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGroups>>
+>
 export type GetGroupsQueryError = GetGroups401 | GetGroups500
 
-
-export function useGetGroups<TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(
- params: undefined |  GetGroupsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>> & Pick<
+export function useGetGroups<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params: undefined | GetGroupsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getGroups>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroups<TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(
- params?: GetGroupsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroups<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params?: GetGroupsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getGroups>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroups<TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(
- params?: GetGroupsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>>, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+        >,
+        'initialData'
+      >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroups<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params?: GetGroupsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+    >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 /**
  * @summary Fetch groups
  */
 
-export function useGetGroups<TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(
- params?: GetGroupsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>>, }
+export function useGetGroups<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params?: GetGroupsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+    >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetGroupsQueryOptions(params, options)
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>
+  }
 
-  const queryOptions = getGetGroupsQueryOptions(params,options)
+  query.queryKey = queryOptions.queryKey
 
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
-
-
-export const getGetGroupsSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(params?: GetGroupsParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>>, }
+export const getGetGroupsSuspenseQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params?: GetGroupsParams,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroups>>,
+        TError,
+        TData
+      >
+    >
+  },
 ) => {
+  const { query: queryOptions } = options ?? {}
 
-const {query: queryOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetGroupsQueryKey(params)
 
-  const queryKey =  queryOptions?.queryKey ?? getGetGroupsQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroups>>> = ({
+    signal,
+  }) => getGroups(params, signal)
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroups>>> = ({ signal }) => getGroups(params, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+    Awaited<ReturnType<typeof getGroups>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> }
 }
 
-export type GetGroupsSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof getGroups>>>
+export type GetGroupsSuspenseQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGroups>>
+>
 export type GetGroupsSuspenseQueryError = GetGroups401 | GetGroups500
 
-
-export function useGetGroupsSuspense<TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(
- params: undefined |  GetGroupsParams, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsSuspense<TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(
- params?: GetGroupsParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsSuspense<TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(
- params?: GetGroupsParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroupsSuspense<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params: undefined | GetGroupsParams,
+  options: {
+    query: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroups>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
+export function useGetGroupsSuspense<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params?: GetGroupsParams,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroups>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
+export function useGetGroupsSuspense<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params?: GetGroupsParams,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroups>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
 /**
  * @summary Fetch groups
  */
 
-export function useGetGroupsSuspense<TData = Awaited<ReturnType<typeof getGroups>>, TError = GetGroups401 | GetGroups500>(
- params?: GetGroupsParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>>, }
+export function useGetGroupsSuspense<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(
+  params?: GetGroupsParams,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroups>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+} {
+  const queryOptions = getGetGroupsSuspenseQueryOptions(params, options)
 
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const query = useSuspenseQuery(queryOptions) as UseSuspenseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData> }
 
-  const queryOptions = getGetGroupsSuspenseQueryOptions(params,options)
+  query.queryKey = queryOptions.queryKey
 
-  const query = useSuspenseQuery(queryOptions) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * @summary Delete a group
  */
-export const deleteGroupsGroupId = (
-    groupId: string,
- ) => {
-      
-      
-      return axiosInstance<DeleteGroupsGroupId200>(
-      {url: `/groups/${groupId}`, method: 'DELETE'
-    },
-      );
-    }
-  
-
-
-export const getDeleteGroupsGroupIdMutationOptions = <TError = DeleteGroupsGroupId400 | DeleteGroupsGroupId401 | DeleteGroupsGroupId500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteGroupsGroupId>>, TError,{groupId: string}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof deleteGroupsGroupId>>, TError,{groupId: string}, TContext> => {
-const {mutation: mutationOptions} = options ?? {};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteGroupsGroupId>>, {groupId: string}> = (props) => {
-          const {groupId} = props ?? {};
-
-          return  deleteGroupsGroupId(groupId,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteGroupsGroupIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteGroupsGroupId>>>
-    
-    export type DeleteGroupsGroupIdMutationError = DeleteGroupsGroupId400 | DeleteGroupsGroupId401 | DeleteGroupsGroupId500
-
-    /**
- * @summary Delete a group
- */
-export const useDeleteGroupsGroupId = <TError = DeleteGroupsGroupId400 | DeleteGroupsGroupId401 | DeleteGroupsGroupId500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteGroupsGroupId>>, TError,{groupId: string}, TContext>, }
-): UseMutationResult<
-        Awaited<ReturnType<typeof deleteGroupsGroupId>>,
-        TError,
-        {groupId: string},
-        TContext
-      > => {
-
-      const mutationOptions = getDeleteGroupsGroupIdMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
- * @summary Get a group
- */
-export const getGroupsGroupId = (
-    groupId: string,
- signal?: AbortSignal
-) => {
-      
-      
-      return axiosInstance<GetGroupsGroupId200>(
-      {url: `/groups/${groupId}`, method: 'GET', signal
-    },
-      );
-    }
-  
-
-export const getGetGroupsGroupIdQueryKey = (groupId: string,) => {
-    return [`/groups/${groupId}`] as const;
-    }
-
-    
-export const getGetGroupsGroupIdQueryOptions = <TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(groupId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetGroupsGroupIdQueryKey(groupId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroupsGroupId>>> = ({ signal }) => getGroupsGroupId(groupId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(groupId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+export const deleteGroupsGroupId = (groupId: string) => {
+  return axiosInstance<DeleteGroupsGroupId200>({
+    url: `/groups/${groupId}`,
+    method: 'DELETE',
+  })
 }
 
-export type GetGroupsGroupIdQueryResult = NonNullable<Awaited<ReturnType<typeof getGroupsGroupId>>>
-export type GetGroupsGroupIdQueryError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500
+export const getDeleteGroupsGroupIdMutationOptions = <
+  TError =
+    | DeleteGroupsGroupId400
+    | DeleteGroupsGroupId401
+    | DeleteGroupsGroupId500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteGroupsGroupId>>,
+    TError,
+    { groupId: string },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteGroupsGroupId>>,
+  TError,
+  { groupId: string },
+  TContext
+> => {
+  const { mutation: mutationOptions } = options ?? {}
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteGroupsGroupId>>,
+    { groupId: string }
+  > = (props) => {
+    const { groupId } = props ?? {}
 
-export function useGetGroupsGroupId<TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(
- groupId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>> & Pick<
+    return deleteGroupsGroupId(groupId)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type DeleteGroupsGroupIdMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteGroupsGroupId>>
+>
+
+export type DeleteGroupsGroupIdMutationError =
+  | DeleteGroupsGroupId400
+  | DeleteGroupsGroupId401
+  | DeleteGroupsGroupId500
+
+/**
+ * @summary Delete a group
+ */
+export const useDeleteGroupsGroupId = <
+  TError =
+    | DeleteGroupsGroupId400
+    | DeleteGroupsGroupId401
+    | DeleteGroupsGroupId500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteGroupsGroupId>>,
+    TError,
+    { groupId: string },
+    TContext
+  >
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteGroupsGroupId>>,
+  TError,
+  { groupId: string },
+  TContext
+> => {
+  const mutationOptions = getDeleteGroupsGroupIdMutationOptions(options)
+
+  return useMutation(mutationOptions)
+}
+/**
+ * @summary Get a group
+ */
+export const getGroupsGroupId = (groupId: string, signal?: AbortSignal) => {
+  return axiosInstance<GetGroupsGroupId200>({
+    url: `/groups/${groupId}`,
+    method: 'GET',
+    signal,
+  })
+}
+
+export const getGetGroupsGroupIdQueryKey = (groupId: string) => {
+  return [`/groups/${groupId}`] as const
+}
+
+export const getGetGroupsGroupIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    >
+  },
+) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetGroupsGroupIdQueryKey(groupId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getGroupsGroupId>>
+  > = ({ signal }) => getGroupsGroupId(groupId, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!groupId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getGroupsGroupId>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetGroupsGroupIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGroupsGroupId>>
+>
+export type GetGroupsGroupIdQueryError =
+  | GetGroupsGroupId400
+  | GetGroupsGroupId401
+  | GetGroupsGroupId500
+
+export function useGetGroupsGroupId<
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getGroupsGroupId>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsGroupId<TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(
- groupId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroupsGroupId<
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getGroupsGroupId>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsGroupId<TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(
- groupId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>>, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+        >,
+        'initialData'
+      >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroupsGroupId<
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 /**
  * @summary Get a group
  */
 
-export function useGetGroupsGroupId<TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(
- groupId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>>, }
+export function useGetGroupsGroupId<
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetGroupsGroupIdQueryOptions(groupId, options)
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>
+  }
 
-  const queryOptions = getGetGroupsGroupIdQueryOptions(groupId,options)
+  query.queryKey = queryOptions.queryKey
 
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
-
-
-export const getGetGroupsGroupIdSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(groupId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>>, }
+export const getGetGroupsGroupIdSuspenseQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    >
+  },
 ) => {
+  const { query: queryOptions } = options ?? {}
 
-const {query: queryOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getGetGroupsGroupIdQueryKey(groupId)
 
-  const queryKey =  queryOptions?.queryKey ?? getGetGroupsGroupIdQueryKey(groupId);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getGroupsGroupId>>
+  > = ({ signal }) => getGroupsGroupId(groupId, signal)
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroupsGroupId>>> = ({ signal }) => getGroupsGroupId(groupId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+    Awaited<ReturnType<typeof getGroupsGroupId>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> }
 }
 
-export type GetGroupsGroupIdSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof getGroupsGroupId>>>
-export type GetGroupsGroupIdSuspenseQueryError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500
+export type GetGroupsGroupIdSuspenseQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGroupsGroupId>>
+>
+export type GetGroupsGroupIdSuspenseQueryError =
+  | GetGroupsGroupId400
+  | GetGroupsGroupId401
+  | GetGroupsGroupId500
 
-
-export function useGetGroupsGroupIdSuspense<TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(
- groupId: string, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsGroupIdSuspense<TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(
- groupId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsGroupIdSuspense<TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(
- groupId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroupsGroupIdSuspense<
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options: {
+    query: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
+export function useGetGroupsGroupIdSuspense<
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
+export function useGetGroupsGroupIdSuspense<
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
 /**
  * @summary Get a group
  */
 
-export function useGetGroupsGroupIdSuspense<TData = Awaited<ReturnType<typeof getGroupsGroupId>>, TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500>(
- groupId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupId>>, TError, TData>>, }
+export function useGetGroupsGroupIdSuspense<
+  TData = Awaited<ReturnType<typeof getGroupsGroupId>>,
+  TError = GetGroupsGroupId400 | GetGroupsGroupId401 | GetGroupsGroupId500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupId>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+} {
+  const queryOptions = getGetGroupsGroupIdSuspenseQueryOptions(groupId, options)
 
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const query = useSuspenseQuery(queryOptions) as UseSuspenseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData> }
 
-  const queryOptions = getGetGroupsGroupIdSuspenseQueryOptions(groupId,options)
+  query.queryKey = queryOptions.queryKey
 
-  const query = useSuspenseQuery(queryOptions) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * @summary Update group description
  */
 export const patchGroupsGroupIdDescription = (
-    groupId: string,
-    patchGroupsGroupIdDescriptionBody: PatchGroupsGroupIdDescriptionBody,
- ) => {
-      
-      
-      return axiosInstance<PatchGroupsGroupIdDescription200>(
-      {url: `/groups/${groupId}/description`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: patchGroupsGroupIdDescriptionBody
-    },
-      );
-    }
-  
+  groupId: string,
+  patchGroupsGroupIdDescriptionBody: PatchGroupsGroupIdDescriptionBody,
+) => {
+  return axiosInstance<PatchGroupsGroupIdDescription200>({
+    url: `/groups/${groupId}/description`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: patchGroupsGroupIdDescriptionBody,
+  })
+}
 
+export const getPatchGroupsGroupIdDescriptionMutationOptions = <
+  TError =
+    | PatchGroupsGroupIdDescription400
+    | PatchGroupsGroupIdDescription401
+    | PatchGroupsGroupIdDescription500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>,
+    TError,
+    { groupId: string; data: PatchGroupsGroupIdDescriptionBody },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>,
+  TError,
+  { groupId: string; data: PatchGroupsGroupIdDescriptionBody },
+  TContext
+> => {
+  const { mutation: mutationOptions } = options ?? {}
 
-export const getPatchGroupsGroupIdDescriptionMutationOptions = <TError = PatchGroupsGroupIdDescription400 | PatchGroupsGroupIdDescription401 | PatchGroupsGroupIdDescription500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>, TError,{groupId: string;data: PatchGroupsGroupIdDescriptionBody}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>, TError,{groupId: string;data: PatchGroupsGroupIdDescriptionBody}, TContext> => {
-const {mutation: mutationOptions} = options ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>,
+    { groupId: string; data: PatchGroupsGroupIdDescriptionBody }
+  > = (props) => {
+    const { groupId, data } = props ?? {}
 
-      
+    return patchGroupsGroupIdDescription(groupId, data)
+  }
 
+  return { mutationFn, ...mutationOptions }
+}
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>, {groupId: string;data: PatchGroupsGroupIdDescriptionBody}> = (props) => {
-          const {groupId,data} = props ?? {};
+export type PatchGroupsGroupIdDescriptionMutationResult = NonNullable<
+  Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>
+>
+export type PatchGroupsGroupIdDescriptionMutationBody =
+  PatchGroupsGroupIdDescriptionBody
+export type PatchGroupsGroupIdDescriptionMutationError =
+  | PatchGroupsGroupIdDescription400
+  | PatchGroupsGroupIdDescription401
+  | PatchGroupsGroupIdDescription500
 
-          return  patchGroupsGroupIdDescription(groupId,data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchGroupsGroupIdDescriptionMutationResult = NonNullable<Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>>
-    export type PatchGroupsGroupIdDescriptionMutationBody = PatchGroupsGroupIdDescriptionBody
-    export type PatchGroupsGroupIdDescriptionMutationError = PatchGroupsGroupIdDescription400 | PatchGroupsGroupIdDescription401 | PatchGroupsGroupIdDescription500
-
-    /**
+/**
  * @summary Update group description
  */
-export const usePatchGroupsGroupIdDescription = <TError = PatchGroupsGroupIdDescription400 | PatchGroupsGroupIdDescription401 | PatchGroupsGroupIdDescription500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>, TError,{groupId: string;data: PatchGroupsGroupIdDescriptionBody}, TContext>, }
-): UseMutationResult<
-        Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>,
-        TError,
-        {groupId: string;data: PatchGroupsGroupIdDescriptionBody},
-        TContext
-      > => {
+export const usePatchGroupsGroupIdDescription = <
+  TError =
+    | PatchGroupsGroupIdDescription400
+    | PatchGroupsGroupIdDescription401
+    | PatchGroupsGroupIdDescription500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>,
+    TError,
+    { groupId: string; data: PatchGroupsGroupIdDescriptionBody },
+    TContext
+  >
+}): UseMutationResult<
+  Awaited<ReturnType<typeof patchGroupsGroupIdDescription>>,
+  TError,
+  { groupId: string; data: PatchGroupsGroupIdDescriptionBody },
+  TContext
+> => {
+  const mutationOptions =
+    getPatchGroupsGroupIdDescriptionMutationOptions(options)
 
-      const mutationOptions = getPatchGroupsGroupIdDescriptionMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions)
+}
+/**
  * @summary Transfer group ownership
  */
-export const patchGroupsGroupIdOwner = (
-    groupId: string,
- ) => {
-      
-      
-      return axiosInstance<PatchGroupsGroupIdOwner200>(
-      {url: `/groups/${groupId}/owner`, method: 'PATCH'
-    },
-      );
-    }
-  
+export const patchGroupsGroupIdOwner = (groupId: string) => {
+  return axiosInstance<PatchGroupsGroupIdOwner200>({
+    url: `/groups/${groupId}/owner`,
+    method: 'PATCH',
+  })
+}
 
+export const getPatchGroupsGroupIdOwnerMutationOptions = <
+  TError =
+    | PatchGroupsGroupIdOwner400
+    | PatchGroupsGroupIdOwner401
+    | PatchGroupsGroupIdOwner500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>,
+    TError,
+    { groupId: string },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>,
+  TError,
+  { groupId: string },
+  TContext
+> => {
+  const { mutation: mutationOptions } = options ?? {}
 
-export const getPatchGroupsGroupIdOwnerMutationOptions = <TError = PatchGroupsGroupIdOwner400 | PatchGroupsGroupIdOwner401 | PatchGroupsGroupIdOwner500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>, TError,{groupId: string}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>, TError,{groupId: string}, TContext> => {
-const {mutation: mutationOptions} = options ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>,
+    { groupId: string }
+  > = (props) => {
+    const { groupId } = props ?? {}
 
-      
+    return patchGroupsGroupIdOwner(groupId)
+  }
 
+  return { mutationFn, ...mutationOptions }
+}
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>, {groupId: string}> = (props) => {
-          const {groupId} = props ?? {};
+export type PatchGroupsGroupIdOwnerMutationResult = NonNullable<
+  Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>
+>
 
-          return  patchGroupsGroupIdOwner(groupId,)
-        }
+export type PatchGroupsGroupIdOwnerMutationError =
+  | PatchGroupsGroupIdOwner400
+  | PatchGroupsGroupIdOwner401
+  | PatchGroupsGroupIdOwner500
 
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchGroupsGroupIdOwnerMutationResult = NonNullable<Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>>
-    
-    export type PatchGroupsGroupIdOwnerMutationError = PatchGroupsGroupIdOwner400 | PatchGroupsGroupIdOwner401 | PatchGroupsGroupIdOwner500
-
-    /**
+/**
  * @summary Transfer group ownership
  */
-export const usePatchGroupsGroupIdOwner = <TError = PatchGroupsGroupIdOwner400 | PatchGroupsGroupIdOwner401 | PatchGroupsGroupIdOwner500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>, TError,{groupId: string}, TContext>, }
-): UseMutationResult<
-        Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>,
-        TError,
-        {groupId: string},
-        TContext
-      > => {
+export const usePatchGroupsGroupIdOwner = <
+  TError =
+    | PatchGroupsGroupIdOwner400
+    | PatchGroupsGroupIdOwner401
+    | PatchGroupsGroupIdOwner500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>,
+    TError,
+    { groupId: string },
+    TContext
+  >
+}): UseMutationResult<
+  Awaited<ReturnType<typeof patchGroupsGroupIdOwner>>,
+  TError,
+  { groupId: string },
+  TContext
+> => {
+  const mutationOptions = getPatchGroupsGroupIdOwnerMutationOptions(options)
 
-      const mutationOptions = getPatchGroupsGroupIdOwnerMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions)
+}
+/**
  * @summary Generate matches
  */
-export const patchGroupsGroupIdGenerateMatches = (
-    groupId: string,
- ) => {
-      
-      
-      return axiosInstance<PatchGroupsGroupIdGenerateMatches201>(
-      {url: `/groups/${groupId}/generate-matches`, method: 'PATCH'
-    },
-      );
-    }
-  
+export const patchGroupsGroupIdGenerateMatches = (groupId: string) => {
+  return axiosInstance<PatchGroupsGroupIdGenerateMatches201>({
+    url: `/groups/${groupId}/generate-matches`,
+    method: 'PATCH',
+  })
+}
 
+export const getPatchGroupsGroupIdGenerateMatchesMutationOptions = <
+  TError =
+    | PatchGroupsGroupIdGenerateMatches400
+    | PatchGroupsGroupIdGenerateMatches401
+    | PatchGroupsGroupIdGenerateMatches500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>,
+    TError,
+    { groupId: string },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>,
+  TError,
+  { groupId: string },
+  TContext
+> => {
+  const { mutation: mutationOptions } = options ?? {}
 
-export const getPatchGroupsGroupIdGenerateMatchesMutationOptions = <TError = PatchGroupsGroupIdGenerateMatches400 | PatchGroupsGroupIdGenerateMatches401 | PatchGroupsGroupIdGenerateMatches500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>, TError,{groupId: string}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>, TError,{groupId: string}, TContext> => {
-const {mutation: mutationOptions} = options ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>,
+    { groupId: string }
+  > = (props) => {
+    const { groupId } = props ?? {}
 
-      
+    return patchGroupsGroupIdGenerateMatches(groupId)
+  }
 
+  return { mutationFn, ...mutationOptions }
+}
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>, {groupId: string}> = (props) => {
-          const {groupId} = props ?? {};
+export type PatchGroupsGroupIdGenerateMatchesMutationResult = NonNullable<
+  Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>
+>
 
-          return  patchGroupsGroupIdGenerateMatches(groupId,)
-        }
+export type PatchGroupsGroupIdGenerateMatchesMutationError =
+  | PatchGroupsGroupIdGenerateMatches400
+  | PatchGroupsGroupIdGenerateMatches401
+  | PatchGroupsGroupIdGenerateMatches500
 
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchGroupsGroupIdGenerateMatchesMutationResult = NonNullable<Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>>
-    
-    export type PatchGroupsGroupIdGenerateMatchesMutationError = PatchGroupsGroupIdGenerateMatches400 | PatchGroupsGroupIdGenerateMatches401 | PatchGroupsGroupIdGenerateMatches500
-
-    /**
+/**
  * @summary Generate matches
  */
-export const usePatchGroupsGroupIdGenerateMatches = <TError = PatchGroupsGroupIdGenerateMatches400 | PatchGroupsGroupIdGenerateMatches401 | PatchGroupsGroupIdGenerateMatches500,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>, TError,{groupId: string}, TContext>, }
-): UseMutationResult<
-        Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>,
-        TError,
-        {groupId: string},
-        TContext
-      > => {
+export const usePatchGroupsGroupIdGenerateMatches = <
+  TError =
+    | PatchGroupsGroupIdGenerateMatches400
+    | PatchGroupsGroupIdGenerateMatches401
+    | PatchGroupsGroupIdGenerateMatches500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>,
+    TError,
+    { groupId: string },
+    TContext
+  >
+}): UseMutationResult<
+  Awaited<ReturnType<typeof patchGroupsGroupIdGenerateMatches>>,
+  TError,
+  { groupId: string },
+  TContext
+> => {
+  const mutationOptions =
+    getPatchGroupsGroupIdGenerateMatchesMutationOptions(options)
 
-      const mutationOptions = getPatchGroupsGroupIdGenerateMatchesMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions)
+}
+/**
  * @summary Get my match
  */
 export const getGroupsGroupIdMyMatch = (
-    groupId: string,
- signal?: AbortSignal
+  groupId: string,
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return axiosInstance<GetGroupsGroupIdMyMatch200>(
-      {url: `/groups/${groupId}/my-match`, method: 'GET', signal
-    },
-      );
-    }
-  
-
-export const getGetGroupsGroupIdMyMatchQueryKey = (groupId: string,) => {
-    return [`/groups/${groupId}/my-match`] as const;
-    }
-
-    
-export const getGetGroupsGroupIdMyMatchQueryOptions = <TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(groupId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetGroupsGroupIdMyMatchQueryKey(groupId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>> = ({ signal }) => getGroupsGroupIdMyMatch(groupId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(groupId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+  return axiosInstance<GetGroupsGroupIdMyMatch200>({
+    url: `/groups/${groupId}/my-match`,
+    method: 'GET',
+    signal,
+  })
 }
 
-export type GetGroupsGroupIdMyMatchQueryResult = NonNullable<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>>
-export type GetGroupsGroupIdMyMatchQueryError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500
+export const getGetGroupsGroupIdMyMatchQueryKey = (groupId: string) => {
+  return [`/groups/${groupId}/my-match`] as const
+}
 
+export const getGetGroupsGroupIdMyMatchQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    >
+  },
+) => {
+  const { query: queryOptions } = options ?? {}
 
-export function useGetGroupsGroupIdMyMatch<TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(
- groupId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>> & Pick<
+  const queryKey =
+    queryOptions?.queryKey ?? getGetGroupsGroupIdMyMatchQueryKey(groupId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>
+  > = ({ signal }) => getGroupsGroupIdMyMatch(groupId, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!groupId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetGroupsGroupIdMyMatchQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>
+>
+export type GetGroupsGroupIdMyMatchQueryError =
+  | GetGroupsGroupIdMyMatch400
+  | GetGroupsGroupIdMyMatch401
+  | GetGroupsGroupIdMyMatch500
+
+export function useGetGroupsGroupIdMyMatch<
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsGroupIdMyMatch<TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(
- groupId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroupsGroupIdMyMatch<
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsGroupIdMyMatch<TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(
- groupId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>>, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+        >,
+        'initialData'
+      >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroupsGroupIdMyMatch<
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 /**
  * @summary Get my match
  */
 
-export function useGetGroupsGroupIdMyMatch<TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(
- groupId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>>, }
+export function useGetGroupsGroupIdMyMatch<
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetGroupsGroupIdMyMatchQueryOptions(groupId, options)
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>
+  }
 
-  const queryOptions = getGetGroupsGroupIdMyMatchQueryOptions(groupId,options)
+  query.queryKey = queryOptions.queryKey
 
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
-
-
-export const getGetGroupsGroupIdMyMatchSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(groupId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>>, }
+export const getGetGroupsGroupIdMyMatchSuspenseQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    >
+  },
 ) => {
+  const { query: queryOptions } = options ?? {}
 
-const {query: queryOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getGetGroupsGroupIdMyMatchQueryKey(groupId)
 
-  const queryKey =  queryOptions?.queryKey ?? getGetGroupsGroupIdMyMatchQueryKey(groupId);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>
+  > = ({ signal }) => getGroupsGroupIdMyMatch(groupId, signal)
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>> = ({ signal }) => getGroupsGroupIdMyMatch(groupId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+    Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> }
 }
 
-export type GetGroupsGroupIdMyMatchSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>>
-export type GetGroupsGroupIdMyMatchSuspenseQueryError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500
+export type GetGroupsGroupIdMyMatchSuspenseQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>
+>
+export type GetGroupsGroupIdMyMatchSuspenseQueryError =
+  | GetGroupsGroupIdMyMatch400
+  | GetGroupsGroupIdMyMatch401
+  | GetGroupsGroupIdMyMatch500
 
-
-export function useGetGroupsGroupIdMyMatchSuspense<TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(
- groupId: string, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsGroupIdMyMatchSuspense<TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(
- groupId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroupsGroupIdMyMatchSuspense<TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(
- groupId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>>, }
-
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroupsGroupIdMyMatchSuspense<
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options: {
+    query: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
+export function useGetGroupsGroupIdMyMatchSuspense<
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
+export function useGetGroupsGroupIdMyMatchSuspense<
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
 /**
  * @summary Get my match
  */
 
-export function useGetGroupsGroupIdMyMatchSuspense<TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError = GetGroupsGroupIdMyMatch400 | GetGroupsGroupIdMyMatch401 | GetGroupsGroupIdMyMatch500>(
- groupId: string, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>, TError, TData>>, }
+export function useGetGroupsGroupIdMyMatchSuspense<
+  TData = Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+  TError =
+    | GetGroupsGroupIdMyMatch400
+    | GetGroupsGroupIdMyMatch401
+    | GetGroupsGroupIdMyMatch500,
+>(
+  groupId: string,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<
+        Awaited<ReturnType<typeof getGroupsGroupIdMyMatch>>,
+        TError,
+        TData
+      >
+    >
+  },
+): UseSuspenseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+} {
+  const queryOptions = getGetGroupsGroupIdMyMatchSuspenseQueryOptions(
+    groupId,
+    options,
+  )
 
-  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const query = useSuspenseQuery(queryOptions) as UseSuspenseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData> }
 
-  const queryOptions = getGetGroupsGroupIdMyMatchSuspenseQueryOptions(groupId,options)
+  query.queryKey = queryOptions.queryKey
 
-  const query = useSuspenseQuery(queryOptions) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
-
