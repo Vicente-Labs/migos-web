@@ -17,6 +17,7 @@ import { useLanguage } from '@/context/language'
 import { usePostUsers } from '@/http/auth'
 
 import { signUpFormSchema, type SignUpFormValues } from './sign-up-schema'
+import { AnimatedLink } from '@/components/animated-link'
 
 export function SignUpForm() {
   const router = useRouter()
@@ -141,6 +142,7 @@ export function SignUpForm() {
         transition={{ delay: 0.6 }}
         className="flex flex-col gap-4"
       >
+        <div className="flex flex-col gap-2">
         <Button
           type="submit"
           disabled={isPending || !isValid}
@@ -149,6 +151,11 @@ export function SignUpForm() {
           {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {dictionary.signUp}
         </Button>
+
+        <AnimatedLink href='/sign-in' className='font-medium self-center'>
+          sign in
+        </AnimatedLink>
+        </div>
 
         <div className="flex items-center gap-2">
           <SelectSeparator className="flex-1" />

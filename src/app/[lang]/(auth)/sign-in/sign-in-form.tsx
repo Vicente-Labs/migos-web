@@ -122,6 +122,7 @@ export function SignInForm() {
         transition={{ delay: 0.6 }}
         className="flex flex-col gap-4"
       >
+        <div className="flex flex-col gap-2">
         <Button
           type="submit"
           disabled={isPending || !isValid}
@@ -130,6 +131,13 @@ export function SignInForm() {
           {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {dictionary.signIn}
         </Button>
+
+        <AnimatedLink href='/sign-up' className='font-medium self-center'>
+          sign up
+        </AnimatedLink>
+        </div>
+
+
 
         <div className="flex items-center gap-2">
           <SelectSeparator className="flex-1" />
