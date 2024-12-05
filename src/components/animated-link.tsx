@@ -19,8 +19,7 @@ export const AnimatedLink = ({
     <span
       {...props}
       className={cn(
-        (className =
-          'relative w-fit text-primary after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-bottom-right after:scale-x-0 after:bg-neutral-400 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100'),
+        'relative w-fit text-primary after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-bottom-right after:scale-x-0 after:bg-neutral-400 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100',
         className,
       )}
     >

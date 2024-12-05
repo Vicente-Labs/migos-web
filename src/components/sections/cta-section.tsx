@@ -60,7 +60,7 @@ export function CTASection() {
         viewport={{ once: true }}
       >
         <Image
-          src="/snow-man.svg"
+          src="/snow-man.png"
           alt="Snow Man"
           width={500}
           height={500}

@@ -72,7 +72,7 @@ export function OurMissionSection() {
         viewport={{ once: true }}
       >
         <Image
-          src="/bell.svg"
+          src="/bell.png"
           alt="Bell"
           width={500}
           height={500}

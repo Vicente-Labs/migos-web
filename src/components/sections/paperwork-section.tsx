@@ -28,7 +28,7 @@ export function PaperworkSection() {
         className="order-2 lg:order-1"
       >
         <Image
-          src="/gifts.svg"
+          src="/gifts.png"
           alt="Gifts"
           width={500}
           height={500}

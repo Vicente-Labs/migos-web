@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 
-import { SignInForm } from './sign-in-form'
+import { SignUpForm } from './sign-up-form'
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <div className="flex min-h-[calc(100vh-8rem)] flex-row items-center justify-center gap-12 px-4">
       <motion.div
@@ -53,7 +53,7 @@ export default function SignInPage() {
           Welcome Back
         </motion.h2>
 
-        <SignInForm />
+        <SignUpForm />
       </motion.div>
     </div>
   )

@@ -48,5 +48,17 @@
   "theMigosTeam": "El Equipo de Migos",
   "preRegisterError": "Ocurrió un error al pre-registrar. Por favor, inténtelo de nuevo.",
   "userAlreadyExists": "Usuario ya pre-registrado",
-  "preRegisterIsNotAvailableYet": "Pre-register is not available yet"
+  "preRegisterIsNotAvailableYet": "Pre-register is not available yet",
+  "passwordRequired": "Password is required",
+  "passwordLength": "Password must be at least 8 characters long",
+  "forgotPassword": "He olvidado mi contraseña",
+  "signIn": "iniciar sesión",
+  "signInWithGoogle": "iniciar sesión con Google",
+  "or": "o",
+  "password": "Contraseña",
+  "passwordsDoNotMatch": "Las contraseñas no coinciden",
+  "nameRequired": "Nombre es requerido",
+  "confirmPassword": "Confirmar contraseña",
+  "signUp": "registrarse",
+  "signUpWithGoogle": "registrarse con Google"
 }
