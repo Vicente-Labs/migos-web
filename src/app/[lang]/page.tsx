@@ -2,23 +2,16 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import NumberFlow from '@number-flow/react'
-// import { useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import Autoplay from 'embla-carousel-autoplay'
 import { motion } from 'framer-motion'
-// import { Loader2 } from 'lucide-react'
-// import Link from 'next/link'
-import { type FormEvent, useEffect, useState } from 'react'
-// import Confetti from 'react-confetti'
+import { Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import Confetti from 'react-confetti'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-// import { toast } from 'sonner'
 import { z } from 'zod'
 
-// import { AnimatedLink } from '@/components/animated-link'
-// import { CTASection } from '@/components/sections/cta-section'
-// import { OurMissionSection } from '@/components/sections/our-mission-section'
-// import { PaperworkSection } from '@/components/sections/paperwork-section'
-// import { PricingSection } from '@/components/sections/pricing-section'
 import { Button } from '@/components/ui/button'
 import {
   Carousel,
@@ -27,13 +20,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import {} from // Dialog,
-// DialogContent,
-// DialogDescription,
-// DialogFooter,
-// DialogHeader,
-// DialogTitle,
-'@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
   Tooltip,
@@ -42,7 +36,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useLanguage } from '@/context/language'
-// import { preRegister } from '@/http/auth/pre-register'
+import { preRegister } from '@/http/auth/pre-register'
 import type { Dictionary } from '@/utils/dictionaries'
 
 const preRegisterFormSchema = (dictionary: Dictionary) =>
@@ -60,12 +54,11 @@ export default function Home() {
   const [hours, setHours] = useState<number>(0)
   const [minutes, setMinutes] = useState<number>(0)
   const [seconds, setSeconds] = useState<number>(0)
-  // const [showConfetti, setShowConfetti] = useState(false)
-  // const [showDialog, setShowDialog] = useState(false)
-  // const [showComingSoonDialog] = useState(true)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const [showDialog, setShowDialog] = useState(false)
 
   useEffect(() => {
-    const targetDate = new Date('2024-12-07T12:00:00-03:00') // 12h Brasília time
+    const targetDate = new Date('2024-12-09T12:00:00-03:00') // 12h Brasília time
 
     const timer = setInterval(() => {
       const now = new Date()
@@ -98,7 +91,7 @@ export default function Home() {
     return () => clearInterval(timer)
   }, [days, hours, minutes, seconds])
 
-  const { dictionary } = useLanguage()
+  const { dictionary, language } = useLanguage()
 
   const form = useForm<PreRegisterFormValues>({
     resolver: zodResolver(preRegisterFormSchema(dictionary)),
@@ -107,39 +100,24 @@ export default function Home() {
     },
   })
 
-  // const { mutate: preRegisterMutation, isPending } = useMutation({
-  //   mutationFn: async (data: PreRegisterFormValues) => {
-  //     const { success, data: parsedData } =
-  //       preRegisterFormSchema(dictionary).safeParse(data)
+  const { mutate: preRegisterMutation, isPending } = useMutation({
+    mutationFn: async (data: PreRegisterFormValues) => {
+      return await preRegister({ dictionary, language, ...data })
+    },
+    onSuccess: () => {
+      form.reset()
+      setShowConfetti(true)
+      setShowDialog(true)
+      toast.success(dictionary.preRegisterSuccess)
+      setTimeout(() => {
+        setShowConfetti(false)
+      }, 5000)
+    },
+    onError: () => toast.error(dictionary.preRegisterError),
+  })
 
-  //     if (!success) throw new Error('Invalid data')
-
-  //     return await preRegister({ dictionary, ...parsedData })
-  //   },
-  //   onSuccess: () => {
-  //     form.reset()
-  //     setShowConfetti(true)
-  //     setShowDialog(true)
-  //     toast.success(dictionary.preRegisterSuccess)
-  //     setTimeout(() => {
-  //       setShowConfetti(false)
-  //     }, 5000)
-  //   },
-  //   onError: () => toast.error(dictionary.preRegisterError),
-  // })
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    // setShowDialog(true)
-
-    // const form = e.currentTarget
-    // const { success, data } = preRegisterFormSchema(dictionary).safeParse(
-    //   Object.fromEntries(new FormData(form)),
-    // )
-
-    // if (!success) return
-
-    // preRegisterMutation(data)
+  function handleSubmit(data: PreRegisterFormValues) {
+    preRegisterMutation(data)
   }
 
   return (
@@ -149,16 +127,16 @@ export default function Home() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      {/* {showConfetti && (
+      {showConfetti && (
         <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
           recycle={false}
           numberOfPieces={500}
         />
-      )} */}
+      )}
 
-      {/* <Dialog open={showDialog} onOpenChange={setShowDialog}>
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="">
           <DialogHeader>
             <DialogTitle>Thank for Pre-registering!</DialogTitle>
@@ -175,7 +153,7 @@ export default function Home() {
             </Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog> */}
+      </Dialog>
 
       <div className="flex w-full max-w-7xl flex-col gap-8 px-4 lg:flex-row">
         <div className="flex flex-1 flex-col items-center justify-center">
@@ -237,7 +215,7 @@ export default function Home() {
             </motion.div>
           </div>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={form.handleSubmit(handleSubmit)}
             className="mt-8 flex w-full max-w-md flex-col gap-4 px-4 sm:px-0"
           >
             <Input
@@ -245,23 +223,20 @@ export default function Home() {
               {...form.register('email')}
               placeholder={dictionary.email}
             />
+            {form.formState.errors.email && (
+              <span className="text-sm text-red-500">
+                {form.formState.errors.email.message}
+              </span>
+            )}
             <TooltipProvider>
               <Tooltip delayDuration={30}>
                 <TooltipTrigger asChild>
-                  <Button
-                    type="button"
-                    onClick={() =>
-                      toast.error(dictionary.preRegisterIsNotAvailableYet)
-                    }
-                    className="w-full"
-                    // type="submit"
-                    // disabled={isPending}
-                  >
-                    {/* {isPending ? (
+                  <Button className="w-full" type="submit" disabled={isPending}>
+                    {isPending ? (
                       <Loader2 className="size-4 animate-spin" />
-                    ) : ( */}
-                    {dictionary.preRegister}
-                    {/*  )} */}
+                    ) : (
+                      dictionary.preRegister
+                    )}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent
@@ -269,15 +244,13 @@ export default function Home() {
                   align="center"
                   className="hidden max-w-md text-center font-poppins text-sm sm:text-base md:block"
                 >
-                  {dictionary.preRegisterIsNotAvailableYet}
-                  {/* {dictionary.preRegisterCTA} */}
+                  {dictionary.preRegisterCTA}
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
 
             <span className="block max-w-md text-center font-poppins text-sm sm:text-base md:hidden">
-              {dictionary.preRegisterIsNotAvailableYet}
-              {/* {dictionary.mobilePreRegisterCTA} */}
+              {dictionary.mobilePreRegisterCTA}
             </span>
           </form>
         </div>
@@ -333,16 +306,4 @@ export default function Home() {
       </div>
     </motion.main>
   )
-
-  // return (
-  //   <main className="mt-8 font-cooperBlack">
-  //     <CTASection />
-
-  //     <PaperworkSection />
-
-  //     <OurMissionSection />
-
-  //     <PricingSection />
-  //   </main>
-  // )
 }
