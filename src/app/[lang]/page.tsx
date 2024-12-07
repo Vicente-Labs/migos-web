@@ -58,7 +58,7 @@ export default function Home() {
   const [showDialog, setShowDialog] = useState(false)
 
   useEffect(() => {
-    const targetDate = new Date('2024-12-09T12:00:00-03:00') // 12h Brasília time
+    const targetDate = new Date('2024-12-10T12:00:00-03:00') // 12h Brasília time
 
     const timer = setInterval(() => {
       const now = new Date()
