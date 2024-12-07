@@ -60,5 +60,6 @@
   "nameRequired": "Nome é requerido",
   "confirmPassword": "Confirmar senha",
   "signUp": "registrar",
-  "signUpWithGoogle": "registrar com Google"
+  "signUpWithGoogle": "registrar com Google",
+  "invalidCredentials": "Credenciais inválidas"
 }

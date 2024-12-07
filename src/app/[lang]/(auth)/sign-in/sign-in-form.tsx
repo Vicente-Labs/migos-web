@@ -1,13 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
+import { signIn } from '@/actions/auth/sign-in'
 import { AnimatedLink } from '@/components/animated-link'
 import { GoogleIcon } from '@/components/icons/google-icon'
 import { Button } from '@/components/ui/button'
@@ -15,13 +15,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { SelectSeparator } from '@/components/ui/select'
 import { useLanguage } from '@/context/language'
-import { usePostAuthenticatePassword } from '@/http/auth'
 
 import { signInFormSchema, type SignInFormValues } from './sign-in-schema'
 
 export function SignInForm() {
   const router = useRouter()
-  const { dictionary } = useLanguage()
+  const { dictionary, language } = useLanguage()
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema(dictionary)),
@@ -38,20 +37,19 @@ export function SignInForm() {
     formState: { errors, isValid },
   } = form
 
-  const { mutate: signIn, isPending } = usePostAuthenticatePassword({
-    mutation: {
-      onSuccess: () => {
-        toast.success('Successfully signed in')
-        router.push('/dashboard')
-      },
-      onError: (error) => {
-        if (error instanceof AxiosError && error.response?.data.message)
-          return toast.error(error.response.data.message)
+  async function handleSignIn(data: SignInFormValues) {
+    try {
+      const { message } = await signIn({
+        email: data.email,
+        password: data.password,
+      })
 
-        return toast.error('An error occurred')
-      },
-    },
-  })
+      toast.success(message)
+      return router.push(`/${language}/dashboard`)
+    } catch {
+      return toast.error(dictionary.invalidCredentials)
+    }
+  }
 
   function handleGoogleSignIn() {
     toast.info('Google sign in coming soon!')
@@ -62,7 +60,7 @@ export function SignInForm() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3 }}
-      onSubmit={handleSubmit((data) => signIn({ data }))}
+      onSubmit={handleSubmit(handleSignIn)}
       className="flex flex-col gap-4"
     >
       <div className="flex flex-col gap-4">
@@ -123,21 +121,21 @@ export function SignInForm() {
         className="flex flex-col gap-4"
       >
         <div className="flex flex-col gap-2">
-        <Button
-          type="submit"
-          disabled={isPending || !isValid}
-          className="bg-primary font-semibold transition-all duration-300 hover:bg-primary/90 disabled:opacity-50"
-        >
-          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {dictionary.signIn}
-        </Button>
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting || !isValid}
+            className="bg-primary font-semibold transition-all duration-300 hover:bg-primary/90 disabled:opacity-50"
+          >
+            {form.formState.isSubmitting && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            {dictionary.signIn}
+          </Button>
 
-        <AnimatedLink href='/sign-up' className='font-medium self-center'>
-          sign up
-        </AnimatedLink>
+          <AnimatedLink href="/sign-up" className="font-medium self-center">
+            sign up
+          </AnimatedLink>
         </div>
-
-
 
         <div className="flex items-center gap-2">
           <SelectSeparator className="flex-1" />

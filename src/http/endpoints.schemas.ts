@@ -130,6 +130,13 @@ export const GetPendingInvites200Message = {
 export type GetPendingInvites200InvitesItemStatus =
   (typeof GetPendingInvites200InvitesItemStatus)[keyof typeof GetPendingInvites200InvitesItemStatus]
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const GetPendingInvites200InvitesItemStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+} as const
+
 export type GetPendingInvites200InvitesItem = {
   createdAt: string
   /** @nullable */
@@ -145,13 +152,6 @@ export type GetPendingInvites200 = {
   invites: GetPendingInvites200InvitesItem[]
   message: GetPendingInvites200Message
 }
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const GetPendingInvites200InvitesItemStatus = {
-  PENDING: 'PENDING',
-  ACCEPTED: 'ACCEPTED',
-  REJECTED: 'REJECTED',
-} as const
 
 export type PostGroupsGroupIdInvitesInviteIdRevoke500Message =
   (typeof PostGroupsGroupIdInvitesInviteIdRevoke500Message)[keyof typeof PostGroupsGroupIdInvitesInviteIdRevoke500Message]
@@ -1038,8 +1038,19 @@ export type PostUsersPreRegister201 = {
   message: PostUsersPreRegister201Message
 }
 
+export type PostUsersPreRegisterBodyLanguage =
+  (typeof PostUsersPreRegisterBodyLanguage)[keyof typeof PostUsersPreRegisterBodyLanguage]
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PostUsersPreRegisterBodyLanguage = {
+  'en-US': 'en-US',
+  'pt-BR': 'pt-BR',
+  'es-ES': 'es-ES',
+} as const
+
 export type PostUsersPreRegisterBody = {
   email: string
+  language: PostUsersPreRegisterBodyLanguage
 }
 
 export type GetAuthenticateGoogle500Message =

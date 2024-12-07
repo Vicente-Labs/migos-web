@@ -1,27 +1,26 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
+import { signUp } from '@/actions/auth/sign-up'
+import { AnimatedLink } from '@/components/animated-link'
 import { GoogleIcon } from '@/components/icons/google-icon'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { SelectSeparator } from '@/components/ui/select'
 import { useLanguage } from '@/context/language'
-import { usePostUsers } from '@/http/auth'
 
 import { signUpFormSchema, type SignUpFormValues } from './sign-up-schema'
-import { AnimatedLink } from '@/components/animated-link'
 
 export function SignUpForm() {
   const router = useRouter()
-  const { dictionary } = useLanguage()
+  const { dictionary, language } = useLanguage()
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpFormSchema(dictionary)),
@@ -39,20 +38,21 @@ export function SignUpForm() {
     formState: { errors, isValid },
   } = form
 
-  const { mutate: signUp, isPending } = usePostUsers({
-    mutation: {
-      onSuccess: () => {
-        toast.success('Successfully signed up')
-        router.push('/dashboard')
-      },
-      onError: (error) => {
-        if (error instanceof AxiosError && error.response?.data.message)
-          return toast.error(error.response.data.message)
+  async function handleSignUp(data: SignUpFormValues) {
+    try {
+      const { message } = await signUp({
+        username: data.name,
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      })
 
-        return toast.error('An error occurred')
-      },
-    },
-  })
+      toast.success(message)
+      return router.push(`/${language}/sign-in`)
+    } catch {
+      return toast.error(dictionary.userAlreadyExists)
+    }
+  }
 
   function handleGoogleSignUp() {
     return toast.info('Google sign in coming soon!')
@@ -63,14 +63,7 @@ export function SignUpForm() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3 }}
-      onSubmit={handleSubmit((data) =>
-        signUp({
-          data: {
-            ...data,
-            username: 'oio',
-          },
-        }),
-      )}
+      onSubmit={handleSubmit(handleSignUp)}
       className="flex flex-col gap-4"
     >
       <div className="flex flex-col gap-4">
@@ -143,18 +136,20 @@ export function SignUpForm() {
         className="flex flex-col gap-4"
       >
         <div className="flex flex-col gap-2">
-        <Button
-          type="submit"
-          disabled={isPending || !isValid}
-          className="bg-primary font-semibold transition-all duration-300 hover:bg-primary/90 disabled:opacity-50"
-        >
-          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {dictionary.signUp}
-        </Button>
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting || !isValid}
+            className="bg-primary font-semibold transition-all duration-300 hover:bg-primary/90 disabled:opacity-50"
+          >
+            {form.formState.isSubmitting && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            {dictionary.signUp}
+          </Button>
 
-        <AnimatedLink href='/sign-in' className='font-medium self-center'>
-          sign in
-        </AnimatedLink>
+          <AnimatedLink href="/sign-in" className="font-medium self-center">
+            sign in
+          </AnimatedLink>
         </div>
 
         <div className="flex items-center gap-2">

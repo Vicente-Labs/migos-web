@@ -6,6 +6,8 @@ import localFont from 'next/font/local'
 
 import { Footer } from '@/components/footer'
 import { Toaster } from '@/components/ui/sonner'
+import { SessionContextProvider } from '@/context/session'
+import { verifySession } from '@/lib/dal'
 import { cn } from '@/lib/utils'
 import type { Language } from '@/types/languages'
 
@@ -43,6 +45,8 @@ export default async function RootLayout({
   const resolvedParams = await params
   const lang = resolvedParams.lang as Language
 
+  const session = await verifySession()
+
   return (
     <html
       lang={lang}
@@ -54,15 +58,17 @@ export default async function RootLayout({
       </head>
 
       <body className="text-smooth overflow-x-hidden antialiased">
-        <Toaster
-          richColors
-          closeButton
-          position="bottom-right"
-          expand={false}
-          theme="light"
-        />
-        {children}
-        <Footer />
+        <SessionContextProvider initialSession={session}>
+          <Toaster
+            richColors
+            closeButton
+            position="bottom-right"
+            expand={false}
+            theme="light"
+          />
+          {children}
+          <Footer />
+        </SessionContextProvider>
       </body>
     </html>
   )

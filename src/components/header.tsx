@@ -1,21 +1,27 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { Bell } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
 import { useLanguage } from '@/context/language'
+import { useSession } from '@/context/session'
 import { cn } from '@/lib/utils'
 
+import AvatarHeader from './avatar-header'
 import { LangSwitcher } from './lang-switcher'
 import { MobileHeader } from './mobile-header'
 import { MobileHeaderDrawer } from './mobile-header-drawer'
-import { buttonVariants } from './ui/button'
+import { NotificationsCenter } from './notifications-center'
+import { Button, buttonVariants } from './ui/button'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
   const { language } = useLanguage()
+
+  const { user } = useSession()
 
   return (
     <>
@@ -41,54 +47,66 @@ export default function Header() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <ul className="flex items-center gap-4">
-            <li>
-              <Link
-                href="#about-us"
-                scroll={true}
-                className={cn(
-                  buttonVariants({ variant: 'outline' }),
-                  'transition-all duration-300 hover:bg-primary/10',
-                )}
-              >
-                about us
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#blog"
-                scroll={true}
-                className={cn(
-                  buttonVariants({ variant: 'outline' }),
-                  'transition-all duration-300 hover:bg-primary/10',
-                )}
-              >
-                blog
-              </Link>
-            </li>
-          </ul>
+          {!user ? (
+            <>
+              <ul className="flex items-center gap-4">
+                <li>
+                  <Link
+                    href="#about-us"
+                    scroll={true}
+                    className={cn(
+                      buttonVariants({ variant: 'outline' }),
+                      'transition-all duration-300 hover:bg-primary/10',
+                    )}
+                  >
+                    about us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#blog"
+                    scroll={true}
+                    className={cn(
+                      buttonVariants({ variant: 'outline' }),
+                      'transition-all duration-300 hover:bg-primary/10',
+                    )}
+                  >
+                    blog
+                  </Link>
+                </li>
+              </ul>
 
-          <LangSwitcher />
+              <LangSwitcher />
 
-          <span className="h-6 w-px rounded-full bg-foreground/20" />
+              <span className="h-6 w-px rounded-full bg-foreground/20" />
 
-          <div className="flex items-center gap-4">
-            <Link
-              href={`/${language}/sign-in`}
-              className={cn(
-                buttonVariants({ variant: 'outline' }),
-                'transition-all duration-300 hover:bg-primary/10',
-              )}
-            >
-              sign in
-            </Link>
-            <Link
-              href={`/${language}/sign-up`}
-              className={cn(buttonVariants({ variant: 'default' }), 'w-44')}
-            >
-              sign up
-            </Link>
-          </div>
+              <div className="flex items-center gap-4">
+                <Link
+                  href={`/${language}/sign-in`}
+                  className={cn(
+                    buttonVariants({ variant: 'outline' }),
+                    'transition-all duration-300 hover:bg-primary/10',
+                  )}
+                >
+                  sign in
+                </Link>
+                <Link
+                  href={`/${language}/sign-up`}
+                  className={cn(buttonVariants({ variant: 'default' }), 'w-44')}
+                >
+                  sign up
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center gap-8">
+              <Button>new group</Button>
+
+              <NotificationsCenter />
+
+              <AvatarHeader user={user} />
+            </div>
+          )}
         </motion.div>
       </motion.header>
 
