@@ -58,7 +58,7 @@ export default function Home() {
   const [showDialog, setShowDialog] = useState(false)
 
   useEffect(() => {
-    const targetDate = new Date('2024-12-10T12:00:00-03:00') // 12h Brasília time
+    const targetDate = new Date('2024-12-12T14:00:00-03:00') // 14h Brasília time
 
     const timer = setInterval(() => {
       const now = new Date()
@@ -122,7 +122,7 @@ export default function Home() {
 
   return (
     <motion.main
-      className="mt-8 flex min-h-[calc(100vh-15rem)] flex-col items-center justify-center gap-8 font-cooperBlack"
+      className="mt-8 flex h-fit flex-col items-center justify-center gap-8 font-cooperBlack"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -135,6 +135,14 @@ export default function Home() {
           numberOfPieces={500}
         />
       )}
+
+      <div className="w-full max-w-7xl px-4">
+        <div className="mb-8 rounded-lg bg-yellow-100 p-4 text-center font-poppins text-yellow-800">
+          ⚠️ Important Notice: Due to ongoing AWS infrastructure issues that we
+          are currently investigating, our launch date may be delayed. We
+          appreciate your patience and understanding.
+        </div>
+      </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="">
