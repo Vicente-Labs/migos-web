@@ -138,9 +138,7 @@ export default function Home() {
 
       <div className="w-full max-w-7xl px-4">
         <div className="mb-8 rounded-lg bg-yellow-100 p-4 text-center font-poppins text-yellow-800">
-          ⚠️ Important Notice: Due to ongoing AWS infrastructure issues that we
-          are currently investigating, our launch date may be delayed. We
-          appreciate your patience and understanding.
+          ⚠️ {dictionary.launchDelayed}
         </div>
       </div>
 
@@ -149,9 +147,7 @@ export default function Home() {
           <DialogHeader>
             <DialogTitle>Thank for Pre-registering!</DialogTitle>
             <DialogDescription className="pt-4">
-              We appreciate your interest! You will be the first to know when
-              Migos is ready to launch. Prepare yourself for an unforgettable
-              Secret Santa experience!
+              {dictionary.weAppreciateYourInterest}
             </DialogDescription>
           </DialogHeader>
 
