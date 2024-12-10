@@ -55,6 +55,8 @@
   "shapeTheFutureOfMigos": "Da forma al futuro de Migos teniendo prioridad en tus solicitudes de funciones. Tus comentarios influirán directamente en nuestra hoja de ruta de desarrollo.",  
   "pioneerBenefits": "Beneficios exclusivos de Pionero",
   "receivePioneerBenefits": "Recibe una insignia de pionero única, un rol exclusivo en Discord y fácil acceso a nuestro equipo.",
-  "launchDelayed": "Nota importante: Debido a problemas de infraestructura en AWS que estamos investigando actualmente, nuestra fecha de lanzamiento puede ser retrasada. Agradecemos su paciencia y comprensión.",
-  "weAppreciateYourInterest": "¡Gracias por tu interés! Serás el primero en saber cuándo Migos está listo para lanzar. Prepárate para una experiencia de Amigo Secreto inolvidable!"
+  "launchDelayed": "Debido a problemas de infraestructura en AWS que estamos investigando actualmente, nuestra fecha de lanzamiento puede ser retrasada. Agradecemos su paciencia y comprensión.",
+  "weAppreciateYourInterest": "¡Gracias por tu interés! Serás el primero en saber cuándo Migos está listo para lanzar. Prepárate para una experiencia de Amigo Secreto inolvidable!",
+  "importantNotice": "Aviso importante",
+  "launchDelayedOnly": "Lanzamiento retrasado"
 }
