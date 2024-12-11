@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 import { CTASection } from '@/components/sections/cta-section'
 import { FeaturesSection } from '@/components/sections/features-section'
@@ -12,10 +13,13 @@ import { useSession } from '@/context/session'
 export default function Home() {
   const router = useRouter()
   const { user } = useSession()
-
   const { language } = useLanguage()
 
-  if (user) return router.push(`/${language}/dashboard`)
+  useEffect(() => {
+    if (user) {
+      router.push(`/${language}/dashboard`)
+    }
+  }, [user, language, router])
 
   return (
     <main className="font-cooperBlack">

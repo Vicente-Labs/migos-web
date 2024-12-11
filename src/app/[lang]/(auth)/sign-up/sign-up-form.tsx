@@ -48,7 +48,7 @@ export function SignUpForm() {
       })
 
       toast.success(message)
-      return router.push(`/${language}/sign-in`)
+      router.push(`/${language}/sign-in`)
     } catch {
       return toast.error(dictionary.userAlreadyExists)
     }

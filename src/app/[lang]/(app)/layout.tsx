@@ -1,5 +1,6 @@
 import Header from '@/components/header'
 import { AppWrapper } from '@/context/app'
+import { GroupModalContextProvider } from '@/context/group-modal'
 import { LanguageContextProvider } from '@/context/language'
 import type { Language } from '@/types/languages'
 import { getDictionary } from '@/utils/dictionaries'
@@ -28,11 +29,11 @@ export default async function RootLayout({
   return (
     <AppWrapper>
       <LanguageContextProvider language={lang} dictionary={dictionary}>
-        <main className="w-full">
+        <GroupModalContextProvider>
           <Header />
 
           {children}
-        </main>
+        </GroupModalContextProvider>
       </LanguageContextProvider>
     </AppWrapper>
   )

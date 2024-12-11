@@ -45,7 +45,7 @@ export function SignInForm() {
       })
 
       toast.success(message)
-      return router.push(`/${language}/dashboard`)
+      router.push(`/${language}/dashboard`)
     } catch {
       return toast.error(dictionary.invalidCredentials)
     }

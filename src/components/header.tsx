@@ -1,10 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Bell } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
+import { useGroupModalState } from '@/context/group-modal'
 import { useLanguage } from '@/context/language'
 import { useSession } from '@/context/session'
 import { cn } from '@/lib/utils'
@@ -18,18 +18,42 @@ import { Button, buttonVariants } from './ui/button'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
-
   const { language } = useLanguage()
-
   const { user } = useSession()
+
+  const navLinks = [
+    { href: '#about-us', label: 'about us' },
+    { href: '#blog', label: 'blog' },
+  ]
+
+  const authLinks = [
+    {
+      href: `/${language}/sign-in`,
+      label: 'sign in',
+      variant: 'outline' as const,
+      className: 'transition-all duration-300 hover:bg-primary/10',
+    },
+    {
+      href: `/${language}/sign-up`,
+      label: 'sign up',
+      variant: 'default' as const,
+      className: 'w-44',
+    },
+  ]
+
+  const commonMotionProps = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { duration: 0.5, delay: 0.3 },
+  }
+
+  const { setIsNewGroupModalOpen } = useGroupModalState()
 
   return (
     <>
       <motion.header
-        className="text-smooth m-10 hidden items-center justify-between font-poppins md:flex"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
+        className="text-smooth m-10 hidden items-center justify-between font-poppins md:flex w-fit-content"
+        {...commonMotionProps}
       >
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -50,30 +74,20 @@ export default function Header() {
           {!user ? (
             <>
               <ul className="flex items-center gap-4">
-                <li>
-                  <Link
-                    href="#about-us"
-                    scroll={true}
-                    className={cn(
-                      buttonVariants({ variant: 'outline' }),
-                      'transition-all duration-300 hover:bg-primary/10',
-                    )}
-                  >
-                    about us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#blog"
-                    scroll={true}
-                    className={cn(
-                      buttonVariants({ variant: 'outline' }),
-                      'transition-all duration-300 hover:bg-primary/10',
-                    )}
-                  >
-                    blog
-                  </Link>
-                </li>
+                {navLinks.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      scroll={true}
+                      className={cn(
+                        buttonVariants({ variant: 'outline' }),
+                        'transition-all duration-300 hover:bg-primary/10',
+                      )}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
 
               <LangSwitcher />
@@ -81,26 +95,25 @@ export default function Header() {
               <span className="h-6 w-px rounded-full bg-foreground/20" />
 
               <div className="flex items-center gap-4">
-                <Link
-                  href={`/${language}/sign-in`}
-                  className={cn(
-                    buttonVariants({ variant: 'outline' }),
-                    'transition-all duration-300 hover:bg-primary/10',
-                  )}
-                >
-                  sign in
-                </Link>
-                <Link
-                  href={`/${language}/sign-up`}
-                  className={cn(buttonVariants({ variant: 'default' }), 'w-44')}
-                >
-                  sign up
-                </Link>
+                {authLinks.map(({ href, label, variant, className }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={cn(buttonVariants({ variant }), className)}
+                  >
+                    {label}
+                  </Link>
+                ))}
               </div>
             </>
           ) : (
             <div className="flex items-center gap-8">
-              <Button>new group</Button>
+              <Button
+                className="w-48"
+                onClick={() => setIsNewGroupModalOpen(true)}
+              >
+                new group
+              </Button>
 
               <NotificationsCenter />
 
@@ -111,7 +124,6 @@ export default function Header() {
       </motion.header>
 
       <MobileHeader setIsOpen={setIsOpen} />
-
       <MobileHeaderDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   )

@@ -3,7 +3,7 @@ import { defineConfig } from 'orval'
 export default defineConfig({
   'migos-api': {
     input: {
-      target: 'https://api.migos.me/docs/json',
+      target: 'http://localhost:3333/docs/json',
     },
     output: {
       mode: 'tags',

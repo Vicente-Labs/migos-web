@@ -10,8 +10,8 @@ import {
 export function NotificationsCenter() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <BellRing className="size-6 cursor-pointer shadow-lg" />
+      <DropdownMenuTrigger className="flex items-center justify-center rounded-full bg-border/20 p-2 text-muted-foreground transition-colors hover:bg-border/40 hover:text-foreground">
+        <BellRing className="size-6 cursor-pointer" />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
