@@ -138,7 +138,7 @@ export default function Home() {
 
       <div className="w-full max-w-7xl px-4">
         <div className="mb-8 rounded-lg bg-yellow-100 p-4 text-center font-poppins text-yellow-800">
-          ⚠️ {dictionary.importantNotice}: {dictionary.launchDelayedOnly}
+          ⚠️ {dictionary.importantNotice}: {dictionary.launchDelayed}
         </div>
       </div>
 
