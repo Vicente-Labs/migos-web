@@ -19,8 +19,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { GetGroupsGroupId200 } from '@/http/endpoints.schemas'
-
-import { animations } from '../page'
+import { animations } from '@/utils/animations'
 
 type Participant = Pick<
   GetGroupsGroupId200['group']['members'][number],

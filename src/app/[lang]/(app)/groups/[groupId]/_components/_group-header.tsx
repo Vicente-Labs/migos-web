@@ -10,8 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useLanguage } from '@/context/language'
 import type { GetGroupsGroupId200 } from '@/http/endpoints.schemas'
 import { usePatchGroupsGroupIdGenerateMatches } from '@/http/group'
-
-import { animations } from '../page'
+import { animations } from '@/utils/animations'
 
 export function GroupHeader({
   isPending,

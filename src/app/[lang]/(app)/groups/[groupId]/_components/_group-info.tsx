@@ -14,8 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useLanguage } from '@/context/language'
 import type { GetGroupsGroupId200 } from '@/http/endpoints.schemas'
-
-import { animations } from '../page'
+import { animations } from '@/utils/animations'
 
 export function GroupInfo({
   data,
