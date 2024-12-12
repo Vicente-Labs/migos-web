@@ -24,7 +24,7 @@ export function Footer() {
           href="mailto:support@migos.vicentesan.dev"
           className="hover:text-primary transition-colors duration-200"
         >
-          support
+          {dictionary.support}
         </Link>
         <span className="hidden md:inline">•</span>
         <span className="md:hidden">•</span>
