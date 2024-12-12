@@ -26,7 +26,11 @@ export function MobileHeaderDrawer({
         </DrawerHeader>
         <div className="flex flex-row gap-4 items-center justify-center">
           {navLinks.map((a) => (
-            <Button variant="outline" className="text-xl font-medium">
+            <Button
+              key={a.href}
+              variant="outline"
+              className="text-xl font-medium"
+            >
               {a.label}
             </Button>
           ))}
@@ -34,7 +38,11 @@ export function MobileHeaderDrawer({
           <div className="bg-muted h-2 w-2 rounded-full" />
 
           {authLinks.map((link) => (
-            <Button variant={link.variant} className="text-xl font-medium">
+            <Button
+              key={link.href}
+              variant={link.variant}
+              className="text-xl font-medium"
+            >
               {link.label}
             </Button>
           ))}

@@ -1,10 +1,16 @@
 {
   "extends": ["@rocketseat/eslint-config/next"],
-  "plugins": ["simple-import-sort", "react-hooks"],
+  "plugins": ["simple-import-sort", "react-hooks", "tailwindcss"],
   "rules": {
     "simple-import-sort/imports": "error",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "tailwindcss/classnames-order": "off",
+    "tailwindcss/enforces-shorthand": "off",
+    "tailwindcss/no-arbitrary-value": "off",
+    "tailwindcss/no-custom-classname": "off",
+    "tailwindcss/no-contradicting-classname": "off",
+    "tailwindcss/enforces-negative-arbitrary-values": "off"
   },
   "settings": {
     "react": {
