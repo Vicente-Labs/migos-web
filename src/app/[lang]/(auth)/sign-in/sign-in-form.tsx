@@ -71,7 +71,7 @@ export function SignInForm() {
             {...register('email')}
             type="email"
             id="email"
-            placeholder="you@example.com"
+            placeholder={dictionary.emailPlaceholder}
             aria-invalid={!!errors.email}
             className="focus-visible:ring-primary"
           />
@@ -126,7 +126,10 @@ export function SignInForm() {
             {dictionary.signIn}
           </Button>
 
-          <AnimatedLink href="/sign-up" className="font-medium self-center">
+          <AnimatedLink
+            href={`/${language}/sign-up`}
+            className="font-medium self-center"
+          >
             {dictionary.signUp}
           </AnimatedLink>
         </div>

@@ -4,9 +4,13 @@ import { motion } from 'framer-motion'
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
 
+import { useLanguage } from '@/context/language'
+
 import { AnimatedLink } from './animated-link'
 
 export function Footer() {
+  const { dictionary } = useLanguage()
+
   return (
     <motion.footer
       className="p-3 sm:p-4 lg:p-6 2xl:p-8 flex flex-col items-center justify-between gap-4 sm:gap-6 font-poppins w-full max-w-[1400px] mx-auto my-4 sm:my-6 lg:my-8 md:flex-row"

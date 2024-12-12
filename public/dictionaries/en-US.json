@@ -98,5 +98,7 @@
   "matchesGeneratedSuccessfully": "Matches generated successfully",
   "wannaSeeYours": "Wanna see yours?",
   "weAreWorkingOnItRightNow": "We are working on it right now",
-  "support": "support"
+  "support": "support",
+  "emailPlaceholder": "Email",
+  "passwordPlaceholder": "Password"
 }
