@@ -24,7 +24,7 @@ export default function Header() {
 
   const navLinks = [
     { href: '#about-us', label: 'about us' },
-    { href: '#blog', label: 'blog' },
+    { href: `/blog`, label: 'blog' },
   ]
 
   const authLinks = [
@@ -86,7 +86,14 @@ export default function Header() {
                   <li key={href}>
                     <Link
                       href={href}
-                      scroll={true}
+                      scroll={false}
+                      onClick={() => {
+                        if (href.includes('#')) {
+                          document.querySelector(href)?.scrollIntoView({
+                            behavior: 'smooth',
+                          })
+                        }
+                      }}
                       className={cn(
                         buttonVariants({ variant: 'outline' }),
                         'transition-all duration-300 hover:bg-primary/10 h-8 sm:h-9 lg:h-10 text-xs sm:text-sm lg:text-base px-2 sm:px-3 lg:px-4',

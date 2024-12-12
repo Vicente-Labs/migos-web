@@ -14,25 +14,26 @@ export function PaperworkSection() {
   return (
     <motion.section
       id="paperwork"
-      className="flex flex-col items-center justify-center gap-8 px-4 py-12 md:gap-16 lg:flex-row lg:gap-[420px] lg:px-20 lg:py-24"
+      className="mx-auto flex max-w-[1400px] flex-col items-center justify-center lg:flex-row"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.3 }}
       viewport={{ once: true }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 120 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
         viewport={{ once: true }}
         className="order-2 lg:order-1"
       >
         <Image
           src="/gifts.png"
-          alt="Gifts"
+          alt="Gifts illustration showing wrapped presents"
           width={500}
           height={500}
-          className="mr-8 w-[280px] sm:w-[400px] md:mr-12 lg:mr-0 lg:w-[500px]"
+          priority
+          className="w-[280px] mr-32 sm:w-[400px] md:mr-12 lg:mr-40 lg:w-[500px]"
         />
       </motion.div>
 
@@ -44,7 +45,7 @@ export function PaperworkSection() {
         viewport={{ once: true }}
       >
         <div className="flex flex-col items-center gap-2 sm:gap-3 lg:items-start">
-          <h1 className="max-w-sm break-words text-4xl md:text-5xl">
+          <h1 className="max-w-sm break-words text-4xl font-bold md:text-5xl">
             {dictionary.putThePaperworkAside}
           </h1>
           <span className="max-w-md break-words text-lg text-[#848780] sm:text-xl md:text-2xl">
@@ -55,9 +56,9 @@ export function PaperworkSection() {
         <div className="w-full max-w-md sm:w-3/4 md:w-2/3 lg:w-full">
           <Button
             onClick={() => {
-              toast.error(`We're not launched yet.`)
+              toast.error("Coming soon! We're working hard to launch.")
             }}
-            className="flex w-full flex-row items-center justify-center px-4 py-4 text-sm sm:px-6 sm:py-6 sm:text-xl"
+            className="flex w-full flex-row items-center justify-center bg-gradient-to-r from-primary to-primary/90 px-4 py-4 text-sm font-medium transition-all hover:opacity-90 sm:px-6 sm:py-6 sm:text-xl"
           >
             {dictionary.letsDoIt}
           </Button>

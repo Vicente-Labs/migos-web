@@ -1,8 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
-import { useLanguage } from '@/context/language'
+import type { BlogPost } from '@/types/blog'
+import type { Language } from '@/types/languages'
 
 const posts = [
   {
@@ -21,10 +23,10 @@ const posts = [
       'pt-BR': 'Como o Migos Nasceu',
     },
   },
-]
+] satisfies BlogPost[]
 
 export default function BlogListing() {
-  const { language } = useLanguage()
+  const { lang } = useParams<{ lang: Language }>()
 
   return (
     <div className="mx-auto flex min-h-[calc(100vh-17rem)] max-w-4xl flex-col items-center px-6 py-8">
@@ -33,11 +35,11 @@ export default function BlogListing() {
         {posts.map((post) => (
           <Link
             key={post.slug}
-            href={`/${language}/blog/${post.slug}`}
+            href={`/${lang}/blog/${post.slug}`}
             className="group flex w-full max-w-4xl justify-between rounded-lg border p-6 transition-all hover:bg-gray-50 hover:shadow-md"
           >
             <h2 className="text-2xl font-semibold transition-colors group-hover:text-primary">
-              {post.title[language]}
+              {post.title[lang]}
             </h2>
             <div className="mt-2 flex items-center text-primary">
               <span className="text-sm">Read more</span>

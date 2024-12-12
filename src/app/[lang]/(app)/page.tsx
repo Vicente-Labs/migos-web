@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -22,7 +23,7 @@ export default function Home() {
   }, [user, language, router])
 
   return (
-    <main className="font-cooperBlack">
+    <motion.main className="font-cooperBlack p-3 sm:p-4 lg:p-6 2xl:p-8 flex flex-col justify-center gap-4 sm:gap-6 lg:gap-8 2xl:gap-12 w-full max-w-[1400px] min-h-[80vh] mx-auto">
       <CTASection />
 
       <PaperworkSection />
@@ -30,6 +31,6 @@ export default function Home() {
       <OurMissionSection />
 
       <FeaturesSection />
-    </main>
+    </motion.main>
   )
 }

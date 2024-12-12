@@ -57,7 +57,7 @@ export default async function RootLayout({
         <meta name="theme-color" content="#f8ffed" />
       </head>
 
-      <body className="text-smooth overflow-x-hidden antialiased">
+      <body className="text-smooth overflow-x-hidden antialiased scroll-smooth">
         <SessionContextProvider initialSession={session}>
           <Toaster
             richColors
