@@ -23,7 +23,7 @@ export default function Header() {
 
   const navLinks = [
     { href: '#about-us', label: dictionary.aboutUs },
-    { href: `/blog`, label: 'blog' },
+    // { href: `/blog`, label: 'blog' },
   ]
 
   const authLinks = [
