@@ -21,13 +21,8 @@ export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl
 
-  const pathnameHasLocale = appLanguages.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
-  )
-
-  if (!pathnameHasLocale) {
-    req.nextUrl.pathname = `/${language}${pathname}`
-    return NextResponse.redirect(req.nextUrl)
+  if (!pathname.includes('maintenance')) {
+    return NextResponse.redirect(new URL(`/${language}/maintenance`, req.url))
   }
 
   return NextResponse.next()

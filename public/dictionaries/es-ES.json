@@ -97,5 +97,7 @@
   "draw": "sorteo",
   "matchesGeneratedSuccessfully": "Correspondencias generadas con éxito",
   "wannaSeeYours": "¿Quieres ver el tuyo?",
-  "weAreWorkingOnItRightNow": "Estamos trabajando en ello en este momento"
+  "weAreWorkingOnItRightNow": "Estamos trabajando en ello en este momento",
+  "maintenance_title": "Estamos en mantenimiento",
+  "maintenance_description": "Estamos trabajando en ello en este momento"
 }

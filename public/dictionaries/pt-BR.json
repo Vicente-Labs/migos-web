@@ -97,5 +97,7 @@
   "draw": "sortear",
   "matchesGeneratedSuccessfully": "Correspondências geradas com sucesso",
   "wannaSeeYours": "Quer ver seu?",
-  "weAreWorkingOnItRightNow": "Estamos trabalhando nisso no momento"
+  "weAreWorkingOnItRightNow": "Estamos trabalhando nisso no momento",
+  "maintenance_title": "Estamos em manutenção",
+  "maintenance_description": "Estamos em manutenção no momento. Por favor, volte mais tarde."
 }

@@ -97,5 +97,7 @@
   "draw": "draw",
   "matchesGeneratedSuccessfully": "Matches generated successfully",
   "wannaSeeYours": "Wanna see yours?",
-  "weAreWorkingOnItRightNow": "We are working on it right now"
+  "weAreWorkingOnItRightNow": "We are working on it right now",
+  "maintenance_title": "We're under maintenance",
+  "maintenance_description": "We are currently undergoing maintenance. Please check back later."
 }

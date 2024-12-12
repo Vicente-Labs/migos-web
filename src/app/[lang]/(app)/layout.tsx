@@ -31,7 +31,7 @@ export default async function RootLayout({
     <AppWrapper>
       <LanguageContextProvider language={lang} dictionary={dictionary}>
         <GroupModalContextProvider>
-          <Header />
+          {/* <Header /> */}
 
           {children}
 
