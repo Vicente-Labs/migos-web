@@ -1,20 +1,36 @@
 'use client'
 
+import { format } from 'date-fns'
 import { motion } from 'framer-motion'
 import { CalendarIcon, GiftIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { redirect, useSearchParams } from 'next/navigation'
 
 import { Skeleton } from '@/components/ui/skeleton'
+import { useLanguage } from '@/context/language'
 import { useSession } from '@/context/session'
 import { useGetGroups } from '@/http/group'
+import { locale } from '@/utils/date-locale'
 
 export default function Dashboard() {
   const { user } = useSession()
-  const { data, isLoading } = useGetGroups()
+
+  const { language } = useLanguage()
 
   if (!user) redirect('/')
+
+  const searchParams = useSearchParams()
+  const page = Number(searchParams.get('page') ?? 1)
+
+  const { data, isPending } = useGetGroups(
+    { page },
+    {
+      query: {
+        queryKey: ['groups'],
+      },
+    },
+  )
 
   return (
     <main className="p-3 sm:p-4 lg:p-6 2xl:p-8 flex flex-col justify-center gap-4 sm:gap-6 lg:gap-8 2xl:gap-12 w-full max-w-[1400px] min-h-[80vh] mx-auto">
@@ -34,7 +50,7 @@ export default function Dashboard() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        {isLoading && !data ? (
+        {isPending && !data ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full h-fit">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="h-36 rounded-lg border bg-card p-4">
@@ -85,7 +101,7 @@ export default function Dashboard() {
                     <div className="flex flex-col gap-1">
                       <h3 className="font-medium">{group.name}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-2">
-                        {group.description}
+                        {group.description ?? 'Click here for more details'}
                       </p>
                     </div>
                   </div>
@@ -94,17 +110,17 @@ export default function Dashboard() {
                     <div className="flex items-center gap-1">
                       <CalendarIcon className="h-4 w-4" />
                       <span>
-                        {new Date(
-                          group.drawDate || new Date(),
-                        ).toLocaleDateString()}
+                        {format(new Date(group.drawDate || new Date()), 'PPP', {
+                          locale: locale[language],
+                        })}
                       </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <GiftIcon className="h-4 w-4" />
                       <span>
-                        {new Date(
-                          group.endDate || new Date(),
-                        ).toLocaleDateString()}
+                        {format(new Date(group.endDate || new Date()), 'PPP', {
+                          locale: locale[language],
+                        })}
                       </span>
                     </div>
                   </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CheckCircle, ChevronRight, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -72,6 +73,8 @@ export function NewGroupModal() {
     },
   })
 
+  const queryClient = useQueryClient()
+
   async function onSubmit(values: FormValues) {
     try {
       const { id } = await createGroup({
@@ -93,6 +96,10 @@ export function NewGroupModal() {
             router.push(`/${language}/groups/${id}`)
           },
         },
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: ['groups'],
       })
 
       form.reset()

@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MenuIcon } from 'lucide-react'
 import Link from 'next/link'
 
 import { Button } from './ui/button'
@@ -46,8 +45,7 @@ export function MobileHeader({ setIsOpen }: MobileHeaderProps) {
           className="text-xl font-medium"
           onClick={() => setIsOpen(true)}
         >
-          <MenuIcon className="size-6" />
-          <span className="sr-only">menu</span>
+          sla
         </Button>
       </motion.div>
     </motion.header>
