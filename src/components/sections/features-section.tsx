@@ -2,12 +2,14 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { useLanguage } from '@/context/language'
 
 export function FeaturesSection() {
-  const { dictionary } = useLanguage()
+  const { dictionary, language } = useLanguage()
+  const router = useRouter()
 
   return (
     <section className="relative overflow-hidden py-24">
@@ -117,7 +119,14 @@ export function FeaturesSection() {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <Button size="lg">{dictionary.startMyAdventure}</Button>
+            <Button
+              size="lg"
+              onClick={() => {
+                router.push(`/${language}/sign-up`)
+              }}
+            >
+              {dictionary.startMyAdventure}
+            </Button>
           </motion.div>
         </motion.div>
       </div>

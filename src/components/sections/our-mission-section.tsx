@@ -2,14 +2,15 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 import { useLanguage } from '@/context/language'
 
 import { Button } from '../ui/button'
 
 export function OurMissionSection() {
-  const { dictionary } = useLanguage()
+  const { dictionary, language } = useLanguage()
+  const router = useRouter()
 
   return (
     <motion.section
@@ -56,9 +57,7 @@ export function OurMissionSection() {
 
         <Button
           onClick={() => {
-            toast.error(
-              "We're not launched yet, but we're working hard to bring you something amazing!",
-            )
+            router.push(`/${language}/sign-up`)
           }}
           className="w-full max-w-md bg-gradient-to-r from-primary to-primary/90 px-6 py-4 text-lg font-bold transition-all hover:opacity-90 sm:py-5 sm:text-xl"
         >

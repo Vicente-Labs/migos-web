@@ -2,14 +2,15 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 import { useLanguage } from '@/context/language'
 
 import { Button } from '../ui/button'
 
 export function PaperworkSection() {
-  const { dictionary } = useLanguage()
+  const { dictionary, language } = useLanguage()
+  const router = useRouter()
 
   return (
     <motion.section
@@ -56,7 +57,7 @@ export function PaperworkSection() {
         <div className="w-full max-w-md sm:w-3/4 md:w-2/3 lg:w-full">
           <Button
             onClick={() => {
-              toast.error("Coming soon! We're working hard to launch.")
+              router.push(`/${language}/sign-up`)
             }}
             className="flex w-full flex-row items-center justify-center bg-gradient-to-r from-primary to-primary/90 px-4 py-4 text-sm font-bold transition-all hover:opacity-90 sm:px-6 sm:py-6 sm:text-xl"
           >
