@@ -17,7 +17,7 @@ export default function Dashboard() {
   if (!user) redirect('/')
 
   return (
-    <main className="p-4 lg:p-8 flex flex-col gap-8 max-w-6xl mx-auto">
+    <main className="p-3 sm:p-4 lg:p-6 2xl:p-8 flex flex-col justify-center gap-4 sm:gap-6 lg:gap-8 2xl:gap-12 w-full max-w-[1400px] min-h-[80vh] mx-auto">
       <motion.div
         className="flex w-full items-center justify-between"
         initial={{ opacity: 0, x: -50 }}
@@ -29,7 +29,7 @@ export default function Dashboard() {
       </motion.div>
 
       <motion.div
-        className="flex flex-col min-h-[calc(100vh-20rem)] items-start justify-start gap-8 px-4 lg:px-2 h-fit"
+        className="flex flex-col min-h-[calc(100vh-20rem)] items-start justify-start gap-8 h-fit"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
@@ -94,13 +94,17 @@ export default function Dashboard() {
                     <div className="flex items-center gap-1">
                       <CalendarIcon className="h-4 w-4" />
                       <span>
-                        {new Date(group.createdAt).toLocaleDateString()}
+                        {new Date(
+                          group.drawDate || new Date(),
+                        ).toLocaleDateString()}
                       </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <GiftIcon className="h-4 w-4" />
                       <span>
-                        {new Date(group.createdAt).toLocaleDateString()}
+                        {new Date(
+                          group.endDate || new Date(),
+                        ).toLocaleDateString()}
                       </span>
                     </div>
                   </div>

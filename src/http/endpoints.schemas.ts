@@ -395,6 +395,71 @@ export type PostGroupGroupIdInvitesBody = {
   name: string
 }
 
+export type PatchGroupsGroupIdBudget500Message =
+  (typeof PatchGroupsGroupIdBudget500Message)[keyof typeof PatchGroupsGroupIdBudget500Message]
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PatchGroupsGroupIdBudget500Message = {
+  Internal_server_error: 'Internal server error',
+} as const
+
+export type PatchGroupsGroupIdBudget500 = {
+  message: PatchGroupsGroupIdBudget500Message
+}
+
+export type PatchGroupsGroupIdBudget401Message =
+  (typeof PatchGroupsGroupIdBudget401Message)[keyof typeof PatchGroupsGroupIdBudget401Message]
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PatchGroupsGroupIdBudget401Message = {
+  You_are_not_allowed_to_update_this_group_budget:
+    'You are not allowed to update this group budget',
+  "You're_not_a_member_of_this_group": "You're not a member of this group",
+  Missing_auth_token: 'Missing auth token',
+  Invalid_token: 'Invalid token',
+} as const
+
+export type PatchGroupsGroupIdBudget401 = {
+  message: PatchGroupsGroupIdBudget401Message
+}
+
+export type PatchGroupsGroupIdBudget400Errors = {
+  description?: string[]
+  groupId?: string[]
+}
+
+export type PatchGroupsGroupIdBudget400 = {
+  errors?: PatchGroupsGroupIdBudget400Errors
+  message: string
+}
+
+export type PatchGroupsGroupIdBudget200Message =
+  (typeof PatchGroupsGroupIdBudget200Message)[keyof typeof PatchGroupsGroupIdBudget200Message]
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PatchGroupsGroupIdBudget200Message = {
+  Group_budget_updated_successfully: 'Group budget updated successfully',
+} as const
+
+export type PatchGroupsGroupIdBudget200 = {
+  message: PatchGroupsGroupIdBudget200Message
+}
+
+export type PatchGroupsGroupIdBudgetBodyCurrency =
+  (typeof PatchGroupsGroupIdBudgetBodyCurrency)[keyof typeof PatchGroupsGroupIdBudgetBodyCurrency]
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PatchGroupsGroupIdBudgetBodyCurrency = {
+  USD: 'USD',
+  EUR: 'EUR',
+  BRL: 'BRL',
+} as const
+
+export type PatchGroupsGroupIdBudgetBody = {
+  budget: string
+  currency: PatchGroupsGroupIdBudgetBodyCurrency
+}
+
 export type GetGroupsGroupIdMyMatch500Message =
   (typeof GetGroupsGroupIdMyMatch500Message)[keyof typeof GetGroupsGroupIdMyMatch500Message]
 
@@ -677,12 +742,22 @@ export type GetGroupsGroupId200GroupMembersItem = {
   name: string
 }
 
+export type GetGroupsGroupId200GroupCurrency =
+  (typeof GetGroupsGroupId200GroupCurrency)[keyof typeof GetGroupsGroupId200GroupCurrency]
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const GetGroupsGroupId200GroupCurrency = {
+  USD: 'USD',
+  EUR: 'EUR',
+  BRL: 'BRL',
+} as const
+
 export type GetGroupsGroupId200Group = {
   /** @nullable */
   avatarUrl?: string | null
-  /** @nullable */
-  budget: string | null
+  budget: string
   createdAt: string
+  currency: GetGroupsGroupId200GroupCurrency
   /** @nullable */
   description?: string | null
   /** @nullable */
@@ -785,12 +860,22 @@ export const GetGroups200GroupsItemRole = {
   MEMBER: 'MEMBER',
 } as const
 
+export type GetGroups200GroupsItemCurrency =
+  (typeof GetGroups200GroupsItemCurrency)[keyof typeof GetGroups200GroupsItemCurrency]
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const GetGroups200GroupsItemCurrency = {
+  USD: 'USD',
+  EUR: 'EUR',
+  BRL: 'BRL',
+} as const
+
 export type GetGroups200GroupsItem = {
   /** @nullable */
   avatarUrl: string | null
-  /** @nullable */
-  budget: string | null
+  budget: string
   createdAt: string
+  currency: GetGroups200GroupsItemCurrency
   /** @nullable */
   description: string | null
   /** @nullable */
@@ -843,6 +928,7 @@ export type PostGroups401 = {
 export type PostGroups400Errors = {
   avatarUrl?: string[]
   budget?: string[]
+  currency?: string[]
   description?: string[]
   drawDate?: string[]
   endDate?: string[]
@@ -867,9 +953,20 @@ export type PostGroups201 = {
   message: PostGroups201Message
 }
 
+export type PostGroupsBodyCurrency =
+  (typeof PostGroupsBodyCurrency)[keyof typeof PostGroupsBodyCurrency]
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PostGroupsBodyCurrency = {
+  USD: 'USD',
+  EUR: 'EUR',
+  BRL: 'BRL',
+} as const
+
 export type PostGroupsBody = {
   avatarUrl?: string
   budget: number
+  currency: PostGroupsBodyCurrency
   description?: string
   drawDate: string
   endDate: string

@@ -40,6 +40,11 @@ import type {
   GetGroupsGroupIdMyMatch401,
   GetGroupsGroupIdMyMatch500,
   GetGroupsParams,
+  PatchGroupsGroupIdBudget200,
+  PatchGroupsGroupIdBudget400,
+  PatchGroupsGroupIdBudget401,
+  PatchGroupsGroupIdBudget500,
+  PatchGroupsGroupIdBudgetBody,
   PatchGroupsGroupIdDescription200,
   PatchGroupsGroupIdDescription400,
   PatchGroupsGroupIdDescription401,
@@ -1279,4 +1284,88 @@ export function useGetGroupsGroupIdMyMatchSuspense<
   query.queryKey = queryOptions.queryKey
 
   return query
+}
+
+/**
+ * @summary Update group budget
+ */
+export const patchGroupsGroupIdBudget = (
+  groupId: string,
+  patchGroupsGroupIdBudgetBody: PatchGroupsGroupIdBudgetBody,
+) => {
+  return axiosInstance<PatchGroupsGroupIdBudget200>({
+    url: `/groups/${groupId}/budget`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: patchGroupsGroupIdBudgetBody,
+  })
+}
+
+export const getPatchGroupsGroupIdBudgetMutationOptions = <
+  TError =
+    | PatchGroupsGroupIdBudget400
+    | PatchGroupsGroupIdBudget401
+    | PatchGroupsGroupIdBudget500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchGroupsGroupIdBudget>>,
+    TError,
+    { groupId: string; data: PatchGroupsGroupIdBudgetBody },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchGroupsGroupIdBudget>>,
+  TError,
+  { groupId: string; data: PatchGroupsGroupIdBudgetBody },
+  TContext
+> => {
+  const { mutation: mutationOptions } = options ?? {}
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchGroupsGroupIdBudget>>,
+    { groupId: string; data: PatchGroupsGroupIdBudgetBody }
+  > = (props) => {
+    const { groupId, data } = props ?? {}
+
+    return patchGroupsGroupIdBudget(groupId, data)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type PatchGroupsGroupIdBudgetMutationResult = NonNullable<
+  Awaited<ReturnType<typeof patchGroupsGroupIdBudget>>
+>
+export type PatchGroupsGroupIdBudgetMutationBody = PatchGroupsGroupIdBudgetBody
+export type PatchGroupsGroupIdBudgetMutationError =
+  | PatchGroupsGroupIdBudget400
+  | PatchGroupsGroupIdBudget401
+  | PatchGroupsGroupIdBudget500
+
+/**
+ * @summary Update group budget
+ */
+export const usePatchGroupsGroupIdBudget = <
+  TError =
+    | PatchGroupsGroupIdBudget400
+    | PatchGroupsGroupIdBudget401
+    | PatchGroupsGroupIdBudget500,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchGroupsGroupIdBudget>>,
+    TError,
+    { groupId: string; data: PatchGroupsGroupIdBudgetBody },
+    TContext
+  >
+}): UseMutationResult<
+  Awaited<ReturnType<typeof patchGroupsGroupIdBudget>>,
+  TError,
+  { groupId: string; data: PatchGroupsGroupIdBudgetBody },
+  TContext
+> => {
+  const mutationOptions = getPatchGroupsGroupIdBudgetMutationOptions(options)
+
+  return useMutation(mutationOptions)
 }

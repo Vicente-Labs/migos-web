@@ -1,4 +1,5 @@
 import Header from '@/components/header'
+import { NewGroupModal } from '@/components/new-group-modal'
 import { AppWrapper } from '@/context/app'
 import { GroupModalContextProvider } from '@/context/group-modal'
 import { LanguageContextProvider } from '@/context/language'
@@ -33,6 +34,8 @@ export default async function RootLayout({
           <Header />
 
           {children}
+
+          <NewGroupModal />
         </GroupModalContextProvider>
       </LanguageContextProvider>
     </AppWrapper>
