@@ -15,7 +15,7 @@ export function OurMissionSection() {
   return (
     <motion.section
       id="about-us"
-      className="mx-auto flex max-w-[1400px] flex-col items-center justify-center gap-12 py-12 lg:flex-row lg:gap-20"
+      className="mx-auto flex max-w-[1400px] flex-col items-center justify-center gap-12 py-12 lg:flex-row lg:gap-20 mb-40 md:my-0"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.3 }}

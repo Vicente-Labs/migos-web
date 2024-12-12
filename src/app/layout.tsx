@@ -4,7 +4,6 @@ import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import localFont from 'next/font/local'
 
-import { Footer } from '@/components/footer'
 import { Toaster } from '@/components/ui/sonner'
 import { SessionContextProvider } from '@/context/session'
 import { verifySession } from '@/lib/dal'
@@ -68,7 +67,6 @@ export default async function RootLayout({
           />
 
           {children}
-          <Footer />
         </SessionContextProvider>
       </body>
     </html>

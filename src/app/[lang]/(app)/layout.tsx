@@ -1,3 +1,4 @@
+import { Footer } from '@/components/footer'
 import Header from '@/components/header'
 import { NewGroupModal } from '@/components/new-group-modal'
 import { AppWrapper } from '@/context/app'
@@ -36,6 +37,8 @@ export default async function RootLayout({
           {children}
 
           <NewGroupModal />
+
+          <Footer />
         </GroupModalContextProvider>
       </LanguageContextProvider>
     </AppWrapper>

@@ -23,7 +23,7 @@ export function FeaturesSection() {
         >
           <div className="max-w-3xl text-center">
             <motion.h2
-              className="mb-6 font-bold md:text-6xl"
+              className="mb-6 font-bold md:text-6xl text-4xl"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}

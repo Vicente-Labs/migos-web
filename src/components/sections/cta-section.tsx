@@ -15,7 +15,7 @@ export function CTASection() {
   return (
     <motion.section
       id="home"
-      className="mx-auto flex max-w-[1400px] flex-col items-center justify-center lg:flex-row"
+      className="mx-auto flex max-w-[1400px] flex-col items-center justify-center lg:flex-row my-40 md:my-0"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.3 }}

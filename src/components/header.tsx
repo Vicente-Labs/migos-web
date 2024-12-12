@@ -54,7 +54,7 @@ export default function Header() {
   return (
     <>
       <motion.header
-        className="flex justify-between w-full flex-row gap-6 lg:items-center lg:gap-12 max-w-[1400px] px-3 sm:px-4 lg:px-6 2xl:px-8 my-4 sm:my-6 lg:my-8 mx-auto"
+        className="md:flex hidden justify-between w-full flex-row gap-6 lg:items-center lg:gap-12 max-w-[1400px] px-3 sm:px-4 lg:px-6 2xl:px-8 my-4 sm:my-6 lg:my-8 mx-auto"
         {...commonMotionProps}
       >
         <motion.div
@@ -124,9 +124,6 @@ export default function Header() {
                   </Link>
                 ))}
               </div>
-
-              <MobileHeader setIsOpen={setIsOpen} />
-              <MobileHeaderDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
             </>
           ) : (
             <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
@@ -146,6 +143,14 @@ export default function Header() {
           )}
         </motion.div>
       </motion.header>
+
+      <MobileHeader setIsOpen={setIsOpen} />
+      <MobileHeaderDrawer
+        authLinks={authLinks}
+        navLinks={navLinks}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </>
   )
 }

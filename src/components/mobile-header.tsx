@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { MenuIcon } from 'lucide-react'
 import Link from 'next/link'
 
 import { Button } from './ui/button'
@@ -19,7 +20,7 @@ export function MobileHeader({ setIsOpen }: MobileHeaderProps) {
 
   return (
     <motion.header
-      className="p-4 flex items-center justify-between font-poppins lg:hidden max-w-6xl mx-auto"
+      className="p-4 flex items-center justify-between font-poppins md:hidden max-w-6xl mx-auto"
       {...commonMotionProps}
     >
       <motion.div
@@ -45,7 +46,7 @@ export function MobileHeader({ setIsOpen }: MobileHeaderProps) {
           className="text-xl font-medium"
           onClick={() => setIsOpen(true)}
         >
-          sla
+          <MenuIcon className="w-6 h-6" />
         </Button>
       </motion.div>
     </motion.header>
