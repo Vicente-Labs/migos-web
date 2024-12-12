@@ -14,7 +14,7 @@
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 25 51% 31%;
-    --muted: 240 4.8% 95.9%;
+    --muted: 240 4.8% 85.9%;
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 25 51% 31%;
@@ -56,4 +56,21 @@
     -moz-osx-font-smoothing: auto;
     text-rendering: optimizeSpeed;
   }
+}
+
+*::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.25rem;
+  margin-right: 0; /* Remove margin to align scrollbar with the right edge */
+}
+
+*::-webkit-scrollbar-track {
+  --bg-opacity: 0.5;
+  background-color: #00000015;
+}
+
+*::-webkit-scrollbar-thumb {
+  --bg-opacity: 0.5;
+  background-color: #13131374;
+  border-radius: 7px;
 }

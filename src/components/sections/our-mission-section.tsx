@@ -2,69 +2,67 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 import { useLanguage } from '@/context/language'
 
 import { Button } from '../ui/button'
 
 export function OurMissionSection() {
-  const { dictionary } = useLanguage()
+  const { dictionary, language } = useLanguage()
+  const router = useRouter()
 
   return (
     <motion.section
       id="about-us"
-      className="flex flex-col items-center justify-center gap-8 px-4 py-12 md:gap-16 lg:flex-row lg:gap-[420px] lg:px-20 lg:py-24"
+      className="mx-auto flex max-w-[1400px] flex-col items-center justify-center gap-12 py-12 lg:flex-row lg:gap-20"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.3 }}
       viewport={{ once: true }}
     >
       <motion.div
-        className="flex w-full flex-col items-center gap-6 text-center md:gap-10 lg:w-auto lg:items-start lg:text-left"
+        className="flex w-full flex-col items-center gap-8 text-center lg:w-1/2 lg:items-start lg:text-left"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         viewport={{ once: true }}
       >
-        <div className="flex flex-col gap-2">
-          <h1 className="text-4xl md:text-5xl">{dictionary.ourMission}</h1>
-          <span className="max-w-md text-xl text-[#848780] md:text-2xl">
+        <div className="flex flex-col items-center gap-4 lg:items-start">
+          <h1 className="text-4xl font-bold md:text-5xl">
+            {dictionary.ourMission}
+          </h1>
+          <p className="max-w-md text-lg text-[#848780] sm:text-xl md:text-2xl">
             {dictionary.weWereCreatedToAddPracticalityToYourXmasWith}
-          </span>
+          </p>
 
-          <ul className="flex flex-col gap-2">
-            <li className="flex flex-row items-center gap-2 text-[#848780]">
-              <span className="text-4xl">•</span>
-              <span className="text-lg md:text-xl">
-                {dictionary.effortlessGiftMatching}
-              </span>
-            </li>
-            <li className="flex flex-row items-center gap-2 text-[#848780]">
-              <span className="text-4xl">•</span>
-              <span className="text-lg md:text-xl">
-                {dictionary.organizedGroupManagement}
-              </span>
-            </li>
-            <li className="flex flex-row items-center gap-2 text-[#848780]">
-              <span className="text-4xl">•</span>
-              <span className="text-lg md:text-xl">
-                {dictionary.funAndEngagingFeatures}
-              </span>
-            </li>
+          <ul className="mt-4 flex flex-col gap-4">
+            {[
+              dictionary.effortlessGiftMatching,
+              dictionary.organizedGroupManagement,
+              dictionary.funAndEngagingFeatures,
+            ].map((feature, index) => (
+              <li
+                key={index}
+                className="flex items-center gap-3 text-[#848780]"
+              >
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  •
+                </span>
+                <span className="text-lg sm:text-xl">{feature}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <div className="w-1/2 lg:w-full">
-          <Button
-            onClick={() => {
-              toast.error(`We're not launched yet.`)
-            }}
-            className="flex w-full flex-row items-center justify-center px-4 py-4 text-sm md:px-6 md:py-6 md:text-xl"
-          >
-            {dictionary.simplifyMyXmas}
-          </Button>
-        </div>
+        <Button
+          onClick={() => {
+            router.push(`/${language}/sign-up`)
+          }}
+          className="w-full max-w-md bg-gradient-to-r from-primary to-primary/90 px-6 py-4 text-lg font-bold transition-all hover:opacity-90 sm:py-5 sm:text-xl"
+        >
+          {dictionary.simplifyMyXmas}
+        </Button>
       </motion.div>
 
       <motion.div
@@ -72,13 +70,15 @@ export function OurMissionSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         viewport={{ once: true }}
+        className="lg:w-1/2"
       >
         <Image
-          src="/bell.svg"
-          alt="Bell"
+          src="/bell.png"
+          alt="Bell illustration representing Christmas and notifications"
           width={500}
           height={500}
-          className="w-[280px] md:w-[400px] lg:w-[500px]"
+          priority
+          className="w-[280px] sm:w-[400px] lg:w-[500px]"
         />
       </motion.div>
     </motion.section>
