@@ -127,7 +127,7 @@ export function SignInForm() {
           </Button>
 
           <AnimatedLink href="/sign-up" className="font-medium self-center">
-            sign up
+            {dictionary.signUp}
           </AnimatedLink>
         </div>
 
