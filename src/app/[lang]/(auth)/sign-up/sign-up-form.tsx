@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -47,16 +48,19 @@ export function SignUpForm() {
 
   async function handleSignUp(data: SignUpFormValues) {
     try {
-      const { message } = await signUp({
+      await signUp({
         name: data.name,
         email: data.email,
         password: data.password,
       })
 
-      toast.success(message)
+      toast.success(dictionary.accountCreatedSuccessfully)
       router.push(`/${language}/sign-in`)
-    } catch {
-      return toast.error(dictionary.userAlreadyExists)
+    } catch (err) {
+      if (err instanceof AxiosError && err.response?.status === 400)
+        return toast.error(dictionary.userAlreadyExists)
+
+      return toast.error(dictionary.unexpectedError)
     }
   }
 

@@ -108,5 +108,7 @@
   "showPassword": "Mostrar senha",
   "hidePassword": "Ocultar senha",
   "welcomeBack": "Bem-vindo de volta",
-  "welcomeIn": "Bem-vindo ao Migos"
+  "welcomeIn": "Bem-vindo ao Migos",
+  "accountCreatedSuccessfully": "Conta criada com sucesso!",
+  "unexpectedError": "Ocorreu um erro inesperado. Por favor, tente novamente."
 }

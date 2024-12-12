@@ -108,5 +108,7 @@
   "showPassword": "Show password",
   "hidePassword": "Hide password",
   "welcomeBack": "Welcome Back",
-  "welcomeIn": "Welcome in Migos"
+  "welcomeIn": "Welcome in Migos",
+  "accountCreatedSuccessfully": "Account created successfully!",
+  "unexpectedError": "An unexpected error occurred. Please try again."
 }
