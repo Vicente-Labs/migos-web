@@ -4,8 +4,11 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 import { Button } from '@/components/ui/button'
+import { useLanguage } from '@/context/language'
 
 export function FeaturesSection() {
+  const { dictionary } = useLanguage()
+
   return (
     <section className="relative overflow-hidden py-24">
       <div className="container mx-auto px-4">
@@ -24,7 +27,7 @@ export function FeaturesSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Why Choose Migos?
+              {dictionary.whyChooseMigos}
             </motion.h2>
 
             <motion.p
@@ -34,8 +37,7 @@ export function FeaturesSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Effortlessly organize your Secret Santa with our powerful
-              features, crafted for seamless and enjoyable gift exchanges.
+              {dictionary.effortlesslyOrganizeYourSecretSanta}
             </motion.p>
           </div>
 
@@ -51,10 +53,9 @@ export function FeaturesSection() {
                 priority
                 quality={100}
               />
-              <h3 className="text-2xl">Group Management</h3>
+              <h3 className="text-2xl">{dictionary.groupManagement}</h3>
               <p className="font-poppins font-medium text-[#848780]">
-                Effortlessly create and manage multiple Secret Santa groups with
-                customizable budgets and deadlines tailored to your needs.
+                {dictionary.groupManagementBenefits}
               </p>
             </div>
 
@@ -69,10 +70,9 @@ export function FeaturesSection() {
                 priority
                 quality={100}
               />
-              <h3 className="text-2xl">Effortless Invitations</h3>
+              <h3 className="text-2xl">{dictionary.effortlessInvitations}</h3>
               <p className="font-poppins font-medium text-[#848780]">
-                Invite your friends with just a few simple clicks, making the
-                process quick and enjoyable.
+                {dictionary.effortlessInvitationsBenefits}
               </p>
             </div>
 
@@ -87,10 +87,9 @@ export function FeaturesSection() {
                 priority
                 quality={100}
               />
-              <h3 className="text-2xl">Smart Gift Matching</h3>
+              <h3 className="text-2xl">{dictionary.smartGiftMatching}</h3>
               <p className="font-poppins font-medium text-[#848780]">
-                Effortlessly connect your friends with their ideal Secret Santa
-                gifts, ensuring everyone is delighted.
+                {dictionary.smartGiftMatchingBenefits}
               </p>
             </div>
 
@@ -105,10 +104,9 @@ export function FeaturesSection() {
                 priority
                 quality={100}
               />
-              <h3 className="text-2xl">Personalized Gift Tips</h3>
+              <h3 className="text-2xl">{dictionary.personalizedGiftTips}</h3>
               <p className="font-poppins font-medium text-[#848780]">
-                Receive tailored gift suggestions for your Secret Santa group,
-                making every present even more special.
+                {dictionary.personalizedGiftTipsBenefits}
               </p>
             </div>
           </div>
@@ -119,7 +117,7 @@ export function FeaturesSection() {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <Button size="lg">start your Secret Santa adventure</Button>
+            <Button size="lg">{dictionary.startMyAdventure}</Button>
           </motion.div>
         </motion.div>
       </div>

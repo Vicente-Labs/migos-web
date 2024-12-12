@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
+import { useLanguage } from '@/context/language'
 import type { BlogPost } from '@/types/blog'
 import type { Language } from '@/types/languages'
 
@@ -27,10 +28,13 @@ const posts = [
 
 export default function BlogListing() {
   const { lang } = useParams<{ lang: Language }>()
+  const { dictionary } = useLanguage()
 
   return (
     <div className="mx-auto flex min-h-[calc(100vh-17rem)] max-w-4xl flex-col items-center px-6 py-8">
-      <h1 className="mb-8 self-start text-4xl font-bold">Blog</h1>
+      <h1 className="mb-8 self-start text-4xl font-cooperBlack">
+        {dictionary.blog}
+      </h1>
       <div className="flex w-full max-w-4xl flex-col items-start justify-center gap-6">
         {posts.map((post) => (
           <Link
@@ -60,7 +64,9 @@ export default function BlogListing() {
           </Link>
         ))}
       </div>
-      <span className="mt-8 text-sm text-gray-500">more comming soon...</span>
+      <span className="mt-8 text-sm text-gray-500">
+        {dictionary.comingSoon}
+      </span>
     </div>
   )
 }

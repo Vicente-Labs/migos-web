@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useLanguage } from '@/context/language'
 import type { GetGroupsGroupId200 } from '@/http/endpoints.schemas'
 
 import { animations } from '../page'
@@ -23,6 +24,8 @@ export function GroupInfo({
   data: GetGroupsGroupId200 | undefined
   isPending: boolean
 }) {
+  const { dictionary } = useLanguage()
+
   return (
     <div className="w-full lg:w-3/4 2xl:w-3/4 gap-[1.2rem] lg:gap-[1.5rem] 2xl:gap-[3rem] flex flex-col h-full">
       <motion.div
@@ -33,7 +36,7 @@ export function GroupInfo({
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 2xl:pb-6">
             <CardTitle className="font-poppins text-base lg:text-lg 2xl:text-2xl flex items-center gap-2 2xl:gap-4">
               <GiftIcon className="h-4 w-4 lg:h-5 lg:w-5 2xl:h-8 2xl:w-8 text-primary" />
-              Gift budget limit
+              {dictionary.giftBudgetLimit}
             </CardTitle>
             <Button
               variant="ghost"
@@ -85,11 +88,15 @@ export function GroupInfo({
             ) : (
               <div className="flex flex-col gap-2 2xl:gap-8">
                 <p className="text-sm 2xl:text-lg text-muted-foreground">
-                  Find out who you'll be gifting to in this group
+                  {dictionary.findOutWhoToGift}
                 </p>
-                <Button variant="default" className="w-full gap-2 2xl:text-xl">
+                <Button
+                  id="view-my-match"
+                  variant="default"
+                  className="w-full gap-2 2xl:text-xl"
+                >
                   <EyeIcon className="h-4 w-4 2xl:h-6 2xl:w-6" />
-                  View my match
+                  {dictionary.viewMyMatch}
                 </Button>
               </div>
             )}

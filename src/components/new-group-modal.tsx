@@ -20,48 +20,50 @@ import {
 } from '@/components/ui/dialog'
 import { useGroupModalState } from '@/context/group-modal'
 import { useLanguage } from '@/context/language'
+import type { Dictionary } from '@/utils/dictionaries'
 
 import { NewGroupFormFields } from './new-group-form-fields'
 import { Button } from './ui/button'
 import { Form } from './ui/form'
 
-const formSchema = z
-  .object({
-    avatarUrl: z.string().optional(),
-    currency: z.enum(['USD', 'EUR', 'BRL']),
-    budget: z.coerce
-      .number()
-      .min(0, { message: 'Budget must be greater than 0' })
-      .multipleOf(0.01, {
-        message: 'Budget must have at most 2 decimal places',
+const formSchema = (dictionary: Dictionary) =>
+  z
+    .object({
+      avatarUrl: z.string().optional(),
+      currency: z.enum(['USD', 'EUR', 'BRL']),
+      budget: z.coerce
+        .number()
+        .min(0, { message: dictionary.budgetMustBeGreaterThanZero })
+        .multipleOf(0.01, {
+          message: dictionary.budgetMustHaveAtMost2Decimals,
+        }),
+      name: z.string().min(3, {
+        message: dictionary.groupNameMin,
       }),
-    name: z.string().min(3, {
-      message: 'Group name must be at least 3 characters',
-    }),
-    description: z.string().optional(),
-    drawDate: z
-      .date()
-      .min(new Date(), { message: 'Draw date must be in the future' }),
-    endDate: z
-      .date()
-      .min(new Date(), { message: 'End date must be in the future' }),
-  })
-  .refine((data) => data.endDate > data.drawDate, {
-    message: 'End date must be after draw date',
-    path: ['endDate'],
-  })
+      description: z.string().optional(),
+      drawDate: z
+        .date()
+        .min(new Date(), { message: dictionary.drawDateMustBeInFuture }),
+      endDate: z
+        .date()
+        .min(new Date(), { message: dictionary.endDateMustBeInFuture }),
+    })
+    .refine((data) => data.endDate > data.drawDate, {
+      message: dictionary.endDateMustBeAfterDrawDate,
+      path: ['endDate'],
+    })
 
-export type FormValues = z.infer<typeof formSchema>
+export type FormValues = z.infer<ReturnType<typeof formSchema>>
 
 export function NewGroupModal() {
   const { isNewGroupModalOpen, setIsNewGroupModalOpen } = useGroupModalState()
   const [step, setStep] = useState<1 | 2>(1)
-  const { language } = useLanguage()
+  const { dictionary, language } = useLanguage()
 
   const router = useRouter()
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema(dictionary)),
     defaultValues: {
       avatarUrl: '',
       currency: 'USD',

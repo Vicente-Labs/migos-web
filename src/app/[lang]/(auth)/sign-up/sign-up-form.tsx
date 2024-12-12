@@ -9,11 +9,9 @@ import { toast } from 'sonner'
 
 import { signUp } from '@/actions/auth/sign-up'
 import { AnimatedLink } from '@/components/animated-link'
-import { GoogleIcon } from '@/components/icons/google-icon'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { SelectSeparator } from '@/components/ui/select'
 import { useLanguage } from '@/context/language'
 
 import { signUpFormSchema, type SignUpFormValues } from './sign-up-schema'
@@ -52,10 +50,6 @@ export function SignUpForm() {
     } catch {
       return toast.error(dictionary.userAlreadyExists)
     }
-  }
-
-  function handleGoogleSignUp() {
-    return toast.info('Google sign in coming soon!')
   }
 
   return (
@@ -152,7 +146,7 @@ export function SignUpForm() {
           </AnimatedLink>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <SelectSeparator className="flex-1" />
           <span className="text-sm text-gray-500">{dictionary.or}</span>
           <SelectSeparator className="flex-1" />
@@ -166,7 +160,7 @@ export function SignUpForm() {
         >
           <GoogleIcon className="mr-2 h-5 w-5" />
           {dictionary.signUpWithGoogle}
-        </Button>
+        </Button> */}
       </motion.div>
     </motion.form>
   )

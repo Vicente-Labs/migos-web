@@ -18,24 +18,24 @@ import { Button, buttonVariants } from './ui/button'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
-  const { language } = useLanguage()
+  const { language, dictionary } = useLanguage()
   const { user } = useSession()
 
   const navLinks = [
-    { href: '#about-us', label: 'about us' },
+    { href: '#about-us', label: dictionary.aboutUs },
     { href: `/blog`, label: 'blog' },
   ]
 
   const authLinks = [
     {
       href: `/${language}/sign-in`,
-      label: 'sign in',
+      label: dictionary.signIn,
       variant: 'outline' as const,
       className: 'transition-all duration-300 hover:bg-primary/10',
     },
     {
       href: `/${language}/sign-up`,
-      label: 'sign up',
+      label: dictionary.signUp,
       variant: 'default' as const,
       className: 'w-full sm:w-44',
     },
@@ -49,6 +49,7 @@ export default function Header() {
   }
 
   const { setIsNewGroupModalOpen } = useGroupModalState()
+  // const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
 
   return (
     <>
@@ -135,7 +136,7 @@ export default function Header() {
                 onClick={() => setIsNewGroupModalOpen(true)}
               >
                 <PlusIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5 lg:h-4 lg:w-4" />
-                new group
+                {dictionary.newGroup}
               </Button>
 
               {/* <NotificationsCenter /> */}

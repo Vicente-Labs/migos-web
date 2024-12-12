@@ -1,6 +1,6 @@
 'use client'
 
-import { LogOut, UserRoundCog } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 
 import { logout } from '@/actions/auth/logout'
 import { useLanguage } from '@/context/language'
@@ -37,10 +37,13 @@ export default function AvatarHeader({ user }: { user: User }) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="center" className="mr-2 mt-2">
-        <DropdownMenuItem className="text-neutral-600 cursor-pointer">
+        {/* <DropdownMenuItem
+          onSelect={setIsProfileModalOpen}
+          className="text-neutral-600 cursor-pointer"
+        >
           <UserRoundCog className="size-4 mr-2" />
           Profile configuration
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <DropdownMenuItem
           className="text-neutral-600 cursor-pointer"

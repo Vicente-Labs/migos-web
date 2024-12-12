@@ -9,11 +9,9 @@ import { toast } from 'sonner'
 
 import { signIn } from '@/actions/auth/sign-in'
 import { AnimatedLink } from '@/components/animated-link'
-import { GoogleIcon } from '@/components/icons/google-icon'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { SelectSeparator } from '@/components/ui/select'
 import { useLanguage } from '@/context/language'
 
 import { signInFormSchema, type SignInFormValues } from './sign-in-schema'
@@ -49,10 +47,6 @@ export function SignInForm() {
     } catch {
       return toast.error(dictionary.invalidCredentials)
     }
-  }
-
-  function handleGoogleSignIn() {
-    toast.info('Google sign in coming soon!')
   }
 
   return (
@@ -137,7 +131,7 @@ export function SignInForm() {
           </AnimatedLink>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <SelectSeparator className="flex-1" />
           <span className="text-sm text-gray-500">{dictionary.or}</span>
           <SelectSeparator className="flex-1" />
@@ -151,7 +145,7 @@ export function SignInForm() {
         >
           <GoogleIcon className="mr-2 h-5 w-5" />
           {dictionary.signInWithGoogle}
-        </Button>
+        </Button> */}
       </motion.div>
     </motion.form>
   )

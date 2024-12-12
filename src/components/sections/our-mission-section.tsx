@@ -60,7 +60,7 @@ export function OurMissionSection() {
               "We're not launched yet, but we're working hard to bring you something amazing!",
             )
           }}
-          className="w-full max-w-md bg-gradient-to-r from-primary to-primary/90 px-6 py-4 text-lg font-medium transition-all hover:opacity-90 sm:py-5 sm:text-xl"
+          className="w-full max-w-md bg-gradient-to-r from-primary to-primary/90 px-6 py-4 text-lg font-bold transition-all hover:opacity-90 sm:py-5 sm:text-xl"
         >
           {dictionary.simplifyMyXmas}
         </Button>
@@ -79,7 +79,7 @@ export function OurMissionSection() {
           width={500}
           height={500}
           priority
-          className="w-[280px] transform transition-transform hover:scale-105 sm:w-[400px] lg:w-[500px]"
+          className="w-[280px] sm:w-[400px] lg:w-[500px]"
         />
       </motion.div>
     </motion.section>

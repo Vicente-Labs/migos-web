@@ -58,7 +58,7 @@ export function PaperworkSection() {
             onClick={() => {
               toast.error("Coming soon! We're working hard to launch.")
             }}
-            className="flex w-full flex-row items-center justify-center bg-gradient-to-r from-primary to-primary/90 px-4 py-4 text-sm font-medium transition-all hover:opacity-90 sm:px-6 sm:py-6 sm:text-xl"
+            className="flex w-full flex-row items-center justify-center bg-gradient-to-r from-primary to-primary/90 px-4 py-4 text-sm font-bold transition-all hover:opacity-90 sm:px-6 sm:py-6 sm:text-xl"
           >
             {dictionary.letsDoIt}
           </Button>

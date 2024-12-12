@@ -2,7 +2,7 @@
 
 import { format } from 'date-fns'
 import { motion } from 'framer-motion'
-import { CalendarIcon, GiftIcon } from 'lucide-react'
+import { CalendarIcon, GiftIcon, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect, useSearchParams } from 'next/navigation'
@@ -97,11 +97,13 @@ export default function Dashboard() {
                   transition={{ duration: 0.3, delay: i * 0.1 }}
                 >
                   <div className="flex gap-4">
-                    <div className="h-12 w-12 rounded-full bg-muted flex-shrink-0" />
+                    <div className="h-12 w-12 rounded-full bg-muted flex-shrink-0 flex items-center justify-center">
+                      <Users className="size-4" />
+                    </div>
                     <div className="flex flex-col gap-1">
                       <h3 className="font-medium">{group.name}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-2">
-                        {group.description ?? 'Click here for more details'}
+                        {group.description || 'Click here for more details'}
                       </p>
                     </div>
                   </div>
