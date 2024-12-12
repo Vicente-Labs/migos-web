@@ -50,7 +50,9 @@ export function Footer() {
         <span className="hidden md:inline">•</span>
         <span className="md:hidden">•</span>
         <span className="flex flex-row items-center justify-center gap-2 text-primary">
-          with <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" /> by{' '}
+          {dictionary.with}{' '}
+          <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />{' '}
+          {dictionary.by}{' '}
           <AnimatedLink
             href="https://vicentesan.dev"
             className="text-xs sm:text-sm lg:text-base"

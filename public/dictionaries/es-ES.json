@@ -99,6 +99,14 @@
   "wannaSeeYours": "¿Quieres ver el tuyo?",
   "weAreWorkingOnItRightNow": "Estamos trabajando en ello en este momento",
   "support": "soporte",
-  "emailPlaceholder": "Email",
-  "passwordPlaceholder": "Contraseña"
+  "with": "con",
+  "by": "por",
+  "emailPlaceholder": "juan@migos.me",
+  "namePlaceholder": "Juan Perez",
+  "passwordPlaceholder": "Contraseña",
+  "back": "Atrás",
+  "showPassword": "Mostrar contraseña",
+  "hidePassword": "Ocultar contraseña",
+  "welcomeBack": "Bienvenido de nuevo",
+  "welcomeIn": "Bienvenido en Migos"
 }

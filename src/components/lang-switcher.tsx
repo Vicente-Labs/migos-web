@@ -33,7 +33,12 @@ export function LangSwitcher() {
       onValueChange={(value) => handleRedirectLanguageChange(value as Language)}
     >
       <SelectTrigger asChild>
-        <Button variant="outline" className="flex items-center">
+        <Button
+          variant="outline"
+          className={cn(
+            'transition-all duration-300 hover:bg-primary/10 h-8 sm:h-9 lg:h-10 text-xs sm:text-sm lg:text-base px-2 sm:px-3 lg:px-4',
+          )}
+        >
           <LanguagesIcon />
           <ChevronDown className="h-4 w-4 opacity-50" />
         </Button>

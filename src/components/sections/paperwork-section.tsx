@@ -59,7 +59,7 @@ export function PaperworkSection() {
             onClick={() => {
               router.push(`/${language}/sign-up`)
             }}
-            className="flex w-full flex-row items-center justify-center bg-gradient-to-r from-primary to-primary/90 px-4 py-4 text-sm font-bold transition-all hover:opacity-90 sm:px-6 sm:py-6 sm:text-xl"
+            className="w-full max-w-md bg-gradient-to-r from-primary to-primary/90 px-6 py-4 text-lg font-bold transition-all hover:opacity-90 sm:py-5 sm:text-xl"
           >
             {dictionary.letsDoIt}
           </Button>

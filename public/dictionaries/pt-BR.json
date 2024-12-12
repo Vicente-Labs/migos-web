@@ -99,6 +99,14 @@
   "wannaSeeYours": "Quer ver seu?",
   "weAreWorkingOnItRightNow": "Estamos trabalhando nisso no momento",
   "support": "suporte",
-  "emailPlaceholder": "E-mail",
-  "passwordPlaceholder": "Senha"
+  "with": "com",
+  "by": "por",
+  "emailPlaceholder": "vicente@migos.me",
+  "namePlaceholder": "Vicente Sanchez",
+  "passwordPlaceholder": "Senha",
+  "back": "Voltar",
+  "showPassword": "Mostrar senha",
+  "hidePassword": "Ocultar senha",
+  "welcomeBack": "Bem-vindo de volta",
+  "welcomeIn": "Bem-vindo ao Migos"
 }

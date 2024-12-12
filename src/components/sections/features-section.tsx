@@ -121,6 +121,7 @@ export function FeaturesSection() {
           >
             <Button
               size="lg"
+              className="w-full max-w-md bg-gradient-to-r from-primary to-primary/90 px-6 py-4 text-lg font-bold transition-all hover:opacity-90 sm:py-5 sm:text-xl"
               onClick={() => {
                 router.push(`/${language}/sign-up`)
               }}

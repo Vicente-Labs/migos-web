@@ -99,6 +99,14 @@
   "wannaSeeYours": "Wanna see yours?",
   "weAreWorkingOnItRightNow": "We are working on it right now",
   "support": "support",
-  "emailPlaceholder": "Email",
-  "passwordPlaceholder": "Password"
+  "with": "with",
+  "by": "by",
+  "emailPlaceholder": "john@migos.me",
+  "namePlaceholder": "John Doe",
+  "passwordPlaceholder": "Password",
+  "back": "Back",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password",
+  "welcomeBack": "Welcome Back",
+  "welcomeIn": "Welcome in Migos"
 }
