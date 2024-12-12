@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { CalendarIcon, GiftIcon, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { redirect, useSearchParams } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { useLanguage } from '@/context/language'
@@ -20,17 +20,11 @@ export default function Dashboard() {
 
   if (!user) redirect('/')
 
-  const searchParams = useSearchParams()
-  const page = Number(searchParams.get('page') ?? 1)
-
-  const { data, isPending } = useGetGroups(
-    { page },
-    {
-      query: {
-        queryKey: ['groups'],
-      },
+  const { data, isPending } = useGetGroups({
+    query: {
+      queryKey: ['groups'],
     },
-  )
+  })
 
   return (
     <main className="p-3 sm:p-4 lg:p-6 2xl:p-8 flex flex-col justify-center gap-4 sm:gap-6 lg:gap-8 2xl:gap-12 w-full max-w-[1400px] min-h-[80vh] mx-auto">

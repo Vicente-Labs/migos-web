@@ -896,10 +896,6 @@ export type GetGroups200 = {
   message: GetGroups200Message
 }
 
-export type GetGroupsParams = {
-  page?: number
-}
-
 export type PostGroups500Message =
   (typeof PostGroups500Message)[keyof typeof PostGroups500Message]
 
@@ -1347,14 +1343,6 @@ export const PostUsers400Message = {
   User_with_same_email_already_exists: 'User with same email already exists',
 } as const
 
-export type PostUsers400ErrorsUsernameItem =
-  (typeof PostUsers400ErrorsUsernameItem)[keyof typeof PostUsers400ErrorsUsernameItem]
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const PostUsers400ErrorsUsernameItem = {
-  Username_is_required: 'Username is required',
-} as const
-
 export type PostUsers400ErrorsPasswordItem =
   (typeof PostUsers400ErrorsPasswordItem)[keyof typeof PostUsers400ErrorsPasswordItem]
 
@@ -1384,7 +1372,6 @@ export type PostUsers400Errors = {
   email?: PostUsers400ErrorsEmailItem[]
   name?: PostUsers400ErrorsNameItem[]
   password?: PostUsers400ErrorsPasswordItem[]
-  username?: PostUsers400ErrorsUsernameItem[]
 }
 
 export type PostUsers400 = {
@@ -1411,6 +1398,4 @@ export type PostUsersBody = {
   name: string
   /** @minLength 8 */
   password: string
-  /** @minLength 1 */
-  username: string
 }

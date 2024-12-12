@@ -39,7 +39,6 @@ import type {
   GetGroupsGroupIdMyMatch400,
   GetGroupsGroupIdMyMatch401,
   GetGroupsGroupIdMyMatch500,
-  GetGroupsParams,
   PatchGroupsGroupIdBudget200,
   PatchGroupsGroupIdBudget400,
   PatchGroupsGroupIdBudget401,
@@ -146,37 +145,29 @@ export const usePostGroups = <
 /**
  * @summary Fetch groups
  */
-export const getGroups = (params?: GetGroupsParams, signal?: AbortSignal) => {
-  return axiosInstance<GetGroups200>({
-    url: `/groups`,
-    method: 'GET',
-    params,
-    signal,
-  })
+export const getGroups = (signal?: AbortSignal) => {
+  return axiosInstance<GetGroups200>({ url: `/groups`, method: 'GET', signal })
 }
 
-export const getGetGroupsQueryKey = (params?: GetGroupsParams) => {
-  return [`/groups`, ...(params ? [params] : [])] as const
+export const getGetGroupsQueryKey = () => {
+  return [`/groups`] as const
 }
 
 export const getGetGroupsQueryOptions = <
   TData = Awaited<ReturnType<typeof getGroups>>,
   TError = GetGroups401 | GetGroups500,
->(
-  params?: GetGroupsParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
-    >
-  },
-) => {
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+  >
+}) => {
   const { query: queryOptions } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getGetGroupsQueryKey(params)
+  const queryKey = queryOptions?.queryKey ?? getGetGroupsQueryKey()
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroups>>> = ({
     signal,
-  }) => getGroups(params, signal)
+  }) => getGroups(signal)
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getGroups>>,
@@ -193,52 +184,45 @@ export type GetGroupsQueryError = GetGroups401 | GetGroups500
 export function useGetGroups<
   TData = Awaited<ReturnType<typeof getGroups>>,
   TError = GetGroups401 | GetGroups500,
->(
-  params: undefined | GetGroupsParams,
-  options: {
-    query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
-    > &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getGroups>>,
-          TError,
-          TData
-        >,
-        'initialData'
-      >
-  },
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroups<
-  TData = Awaited<ReturnType<typeof getGroups>>,
-  TError = GetGroups401 | GetGroups500,
->(
-  params?: GetGroupsParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
-    > &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getGroups>>,
-          TError,
-          TData
-        >,
-        'initialData'
-      >
-  },
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetGroups<
-  TData = Awaited<ReturnType<typeof getGroups>>,
-  TError = GetGroups401 | GetGroups500,
->(
-  params?: GetGroupsParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getGroups>>,
+        TError,
+        TData
+      >,
+      'initialData'
     >
-  },
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>
+}
+export function useGetGroups<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getGroups>>,
+        TError,
+        TData
+      >,
+      'initialData'
+    >
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetGroups<
+  TData = Awaited<ReturnType<typeof getGroups>>,
+  TError = GetGroups401 | GetGroups500,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+  >
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 /**
  * @summary Fetch groups
  */
@@ -246,15 +230,12 @@ export function useGetGroups<
 export function useGetGroups<
   TData = Awaited<ReturnType<typeof getGroups>>,
   TError = GetGroups401 | GetGroups500,
->(
-  params?: GetGroupsParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
-    >
-  },
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetGroupsQueryOptions(params, options)
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getGroups>>, TError, TData>
+  >
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetGroupsQueryOptions(options)
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>
@@ -268,25 +249,22 @@ export function useGetGroups<
 export const getGetGroupsSuspenseQueryOptions = <
   TData = Awaited<ReturnType<typeof getGroups>>,
   TError = GetGroups401 | GetGroups500,
->(
-  params?: GetGroupsParams,
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<
-        Awaited<ReturnType<typeof getGroups>>,
-        TError,
-        TData
-      >
+>(options?: {
+  query?: Partial<
+    UseSuspenseQueryOptions<
+      Awaited<ReturnType<typeof getGroups>>,
+      TError,
+      TData
     >
-  },
-) => {
+  >
+}) => {
   const { query: queryOptions } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getGetGroupsQueryKey(params)
+  const queryKey = queryOptions?.queryKey ?? getGetGroupsQueryKey()
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getGroups>>> = ({
     signal,
-  }) => getGroups(params, signal)
+  }) => getGroups(signal)
 
   return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof getGroups>>,
@@ -303,52 +281,43 @@ export type GetGroupsSuspenseQueryError = GetGroups401 | GetGroups500
 export function useGetGroupsSuspense<
   TData = Awaited<ReturnType<typeof getGroups>>,
   TError = GetGroups401 | GetGroups500,
->(
-  params: undefined | GetGroupsParams,
-  options: {
-    query: Partial<
-      UseSuspenseQueryOptions<
-        Awaited<ReturnType<typeof getGroups>>,
-        TError,
-        TData
-      >
+>(options: {
+  query: Partial<
+    UseSuspenseQueryOptions<
+      Awaited<ReturnType<typeof getGroups>>,
+      TError,
+      TData
     >
-  },
-): UseSuspenseQueryResult<TData, TError> & {
+  >
+}): UseSuspenseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>
 }
 export function useGetGroupsSuspense<
   TData = Awaited<ReturnType<typeof getGroups>>,
   TError = GetGroups401 | GetGroups500,
->(
-  params?: GetGroupsParams,
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<
-        Awaited<ReturnType<typeof getGroups>>,
-        TError,
-        TData
-      >
+>(options?: {
+  query?: Partial<
+    UseSuspenseQueryOptions<
+      Awaited<ReturnType<typeof getGroups>>,
+      TError,
+      TData
     >
-  },
-): UseSuspenseQueryResult<TData, TError> & {
+  >
+}): UseSuspenseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>
 }
 export function useGetGroupsSuspense<
   TData = Awaited<ReturnType<typeof getGroups>>,
   TError = GetGroups401 | GetGroups500,
->(
-  params?: GetGroupsParams,
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<
-        Awaited<ReturnType<typeof getGroups>>,
-        TError,
-        TData
-      >
+>(options?: {
+  query?: Partial<
+    UseSuspenseQueryOptions<
+      Awaited<ReturnType<typeof getGroups>>,
+      TError,
+      TData
     >
-  },
-): UseSuspenseQueryResult<TData, TError> & {
+  >
+}): UseSuspenseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>
 }
 /**
@@ -358,21 +327,18 @@ export function useGetGroupsSuspense<
 export function useGetGroupsSuspense<
   TData = Awaited<ReturnType<typeof getGroups>>,
   TError = GetGroups401 | GetGroups500,
->(
-  params?: GetGroupsParams,
-  options?: {
-    query?: Partial<
-      UseSuspenseQueryOptions<
-        Awaited<ReturnType<typeof getGroups>>,
-        TError,
-        TData
-      >
+>(options?: {
+  query?: Partial<
+    UseSuspenseQueryOptions<
+      Awaited<ReturnType<typeof getGroups>>,
+      TError,
+      TData
     >
-  },
-): UseSuspenseQueryResult<TData, TError> & {
+  >
+}): UseSuspenseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>
 } {
-  const queryOptions = getGetGroupsSuspenseQueryOptions(params, options)
+  const queryOptions = getGetGroupsSuspenseQueryOptions(options)
 
   const query = useSuspenseQuery(queryOptions) as UseSuspenseQueryResult<
     TData,

@@ -6,6 +6,7 @@ import {
   TrashIcon,
   UsersIcon,
 } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -18,6 +19,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useLanguage } from '@/context/language'
 import type { GetGroupsGroupId200 } from '@/http/endpoints.schemas'
 import { animations } from '@/utils/animations'
 
@@ -35,6 +37,8 @@ export function ParticipantsList({
   ownerId: string | undefined
   participants: Participant[] | undefined
 }) {
+  const { dictionary } = useLanguage()
+
   const renderSkeletonParticipant = (index: number) => (
     <div
       key={index}
@@ -126,6 +130,7 @@ export function ParticipantsList({
           <Button
             variant="outline"
             className="w-full gap-1.5 sm:gap-2 2xl:gap-4 mt-auto text-xs sm:text-sm 2xl:text-lg"
+            onClick={() => toast.info(dictionary.weAreWorkingOnItRightNow)}
           >
             <PlusIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5 lg:h-4 lg:w-4 2xl:h-6 2xl:w-6" />
             Add participants

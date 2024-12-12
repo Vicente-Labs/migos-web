@@ -8,6 +8,7 @@ import {
   HandHeart,
   PencilIcon,
 } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -41,6 +42,7 @@ export function GroupInfo({
               variant="ghost"
               size="icon"
               className="h-8 w-8 2xl:h-12 2xl:w-12"
+              onClick={() => toast.info(dictionary.weAreWorkingOnItRightNow)}
             >
               <PencilIcon className="h-4 w-4 2xl:h-6 2xl:w-6" />
             </Button>
@@ -93,6 +95,9 @@ export function GroupInfo({
                   id="view-my-match"
                   variant="default"
                   className="w-full gap-2 2xl:text-xl"
+                  onClick={() =>
+                    toast.info(dictionary.weAreWorkingOnItRightNow)
+                  }
                 >
                   <EyeIcon className="h-4 w-4 2xl:h-6 2xl:w-6" />
                   {dictionary.viewMyMatch}
