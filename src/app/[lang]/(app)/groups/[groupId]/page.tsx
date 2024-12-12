@@ -5,37 +5,11 @@ import { redirect, useParams } from 'next/navigation'
 
 import { useSession } from '@/context/session'
 import { useGetGroupsGroupId } from '@/http/group'
+import { animations } from '@/utils/animations'
 
 import { GroupHeader } from './_components/_group-header'
 import { GroupInfo } from './_components/_group-info'
 import { ParticipantsList } from './_components/_participants-list'
-
-export const animations = {
-  container: {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  },
-  item: {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
-  },
-  slideIn: {
-    hidden: { opacity: 0, x: -50 },
-    show: { opacity: 1, x: 0 },
-    transition: { duration: 0.5, delay: 0.3 },
-  },
-  slideInRight: {
-    hidden: { opacity: 0, x: 50 },
-    show: { opacity: 1, x: 0 },
-    transition: { duration: 0.5, delay: 0.3 },
-  },
-}
 
 export default function GroupPage() {
   const { groupId } = useParams<{ groupId: string }>()
