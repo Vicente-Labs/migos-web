@@ -1,4 +1,4 @@
-import Header from '@/components/header'
+// import Header from '@/components/header'
 import { NewGroupModal } from '@/components/new-group-modal'
 import { AppWrapper } from '@/context/app'
 import { GroupModalContextProvider } from '@/context/group-modal'
