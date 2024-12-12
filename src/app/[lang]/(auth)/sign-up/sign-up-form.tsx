@@ -39,7 +39,6 @@ export function SignUpForm() {
   async function handleSignUp(data: SignUpFormValues) {
     try {
       const { message } = await signUp({
-        username: data.name,
         name: data.name,
         email: data.email,
         password: data.password,
