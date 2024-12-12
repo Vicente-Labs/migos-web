@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest',
 }
 
-interface RootLayoutProps {
+type RootLayoutProps = {
   children: React.ReactNode
   params: Promise<{ lang: string }>
 }

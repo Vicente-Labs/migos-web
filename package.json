@@ -1,10 +1,11 @@
 {
   "name": "web",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "env:load": "dotenv -e .env --",
-    "dev": "pnpm env:load next dev --turbo",
+    "dev": "bun env:load next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
