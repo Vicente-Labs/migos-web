@@ -66,6 +66,7 @@ export default async function RootLayout({
             expand={false}
             theme="light"
           />
+
           {children}
           <Footer />
         </SessionContextProvider>

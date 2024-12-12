@@ -39,10 +39,7 @@ export function LangSwitcher() {
         </Button>
       </SelectTrigger>
 
-      <SelectContent
-        className="border-2 border-input shadow-[3px_3px_0px_0px_rgba(0,0,0,0.2)]"
-        align="center"
-      >
+      <SelectContent className="border-2 border-input" align="center">
         {SUPPORTED_LANGUAGES.map(({ value, country, label, enabled }) => (
           <SelectItem
             key={value}

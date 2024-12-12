@@ -669,10 +669,19 @@ export const GetGroupsGroupId200Message = {
   Group_fetched_successfully: 'Group fetched successfully',
 } as const
 
+export type GetGroupsGroupId200GroupMembersItem = {
+  /** @nullable */
+  avatarUrl?: string | null
+  email: string
+  id: string
+  name: string
+}
+
 export type GetGroupsGroupId200Group = {
   /** @nullable */
   avatarUrl?: string | null
-  budget: string
+  /** @nullable */
+  budget: string | null
   createdAt: string
   /** @nullable */
   description?: string | null
@@ -680,6 +689,7 @@ export type GetGroupsGroupId200Group = {
   drawDate?: string | null
   endDate: string
   id: string
+  members: GetGroupsGroupId200GroupMembersItem[]
   membersCount: number
   name: string
   ownerId: string
@@ -778,7 +788,8 @@ export const GetGroups200GroupsItemRole = {
 export type GetGroups200GroupsItem = {
   /** @nullable */
   avatarUrl: string | null
-  budget: string
+  /** @nullable */
+  budget: string | null
   createdAt: string
   /** @nullable */
   description: string | null

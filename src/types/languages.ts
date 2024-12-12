@@ -1,10 +1,12 @@
 export type Language = 'en-US' | 'es-ES' | 'pt-BR'
 
 export type PageProps<T = unknown> = {
-  searchParams: {
+  searchParams: Promise<{
     [key: string]: string
-  }
-  params: {
-    lang: Language
-  } & T
+  }>
+  params: Promise<
+    {
+      lang: Language
+    } & T
+  >
 }

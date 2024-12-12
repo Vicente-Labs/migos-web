@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { useLanguage } from '@/context/language'
 import { useSession } from '@/context/session'
 import { useGetGroups } from '@/http/group'
 
@@ -15,16 +14,14 @@ export default function Dashboard() {
   const { user } = useSession()
   const { data, isLoading } = useGetGroups()
 
-  const { language } = useLanguage()
-
   if (!user) redirect('/')
 
   return (
-    <main className="p-8 flex flex-col gap-8">
+    <main className="p-4 lg:p-8 flex flex-col gap-8 max-w-6xl mx-auto">
       <motion.div
         className="flex w-full items-center justify-between"
         initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         viewport={{ once: true }}
       >
@@ -76,7 +73,7 @@ export default function Dashboard() {
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full h-fit">
             {data?.groups.map((group, i) => (
-              <Link key={group.id} href={`${language}/groups/${group.id}`}>
+              <Link key={group.id} href={`/groups/${group.id}`}>
                 <motion.div
                   className="flex flex-col h-36 cursor-pointer rounded-lg border bg-card p-4 shadow-sm transition-all hover:shadow-md"
                   initial={{ opacity: 0, y: 20 }}
