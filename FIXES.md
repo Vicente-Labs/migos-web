@@ -1,5 +1,9 @@
 # Reported Issues
 
+  Urgent Todo:
+
+  [ ] - Find out how to trigger errors correctly with Orval
+
   Todo:
 
  [ ] - Add view match
