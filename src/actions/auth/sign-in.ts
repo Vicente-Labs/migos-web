@@ -1,8 +1,6 @@
 'use server'
 
-import { redirect } from 'next/navigation'
-
-import { postAuthenticatePassword } from '@/http/auth'
+import { signInWithPassword } from '@/http/auth/sign-in-with-passoword'
 import { createSession } from '@/lib/session'
 
 type SignInInput = {
@@ -11,14 +9,13 @@ type SignInInput = {
   redirectTo?: string
 }
 
-export async function signIn({ email, password, redirectTo }: SignInInput) {
-  const { token, message } = await postAuthenticatePassword({ email, password })
+export async function signIn({ email, password }: SignInInput) {
+  const result = await signInWithPassword({ email, password })
 
-  if (token) {
-    await createSession({ token })
+  if ('token' in result)
+    await createSession({
+      token: result.token,
+    })
 
-    if (redirectTo) redirect(redirectTo)
-  }
-
-  return { message }
+  return result
 }

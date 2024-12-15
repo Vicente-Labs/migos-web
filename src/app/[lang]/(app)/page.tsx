@@ -17,9 +17,7 @@ export default function Home() {
   const { language } = useLanguage()
 
   useEffect(() => {
-    if (user) {
-      router.push(`/${language}/dashboard`)
-    }
+    if (user) router.push(`/${language}/dashboard`)
   }, [user, language, router])
 
   return (

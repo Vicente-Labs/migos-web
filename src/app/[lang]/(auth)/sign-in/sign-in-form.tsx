@@ -17,8 +17,8 @@ import { useLanguage } from '@/context/language'
 import { signInFormSchema, type SignInFormValues } from './sign-in-schema'
 
 export function SignInForm() {
-  const router = useRouter()
   const { dictionary, language } = useLanguage()
+  const router = useRouter()
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema(dictionary)),
@@ -37,15 +37,35 @@ export function SignInForm() {
 
   async function handleSignIn(data: SignInFormValues) {
     try {
-      const { message } = await signIn({
+      const result = await signIn({
         email: data.email,
         password: data.password,
       })
 
-      toast.success(message)
-      router.push(`/${language}/dashboard`)
+      if ('message' in result) {
+        switch (result.message) {
+          case 'Validation error': {
+            if (result.errors) {
+              Object.entries(result.errors).forEach(([field, messages]) => {
+                if (field === 'email' || field === 'password') {
+                  form.setError(field, {
+                    message: messages?.[0] || '',
+                  })
+                }
+              })
+            }
+            return
+          }
+          case 'Authenticated successfully':
+            router.push('/')
+
+            return toast.success(dictionary.signedInSuccessfully)
+          default:
+            return toast.error(dictionary.invalidCredentials)
+        }
+      }
     } catch {
-      return toast.error(dictionary.invalidCredentials)
+      return toast.error(dictionary.unexpectedError)
     }
   }
 

@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { motion } from 'framer-motion'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -26,8 +25,8 @@ import { useLanguage } from '@/context/language'
 import { signUpFormSchema, type SignUpFormValues } from './sign-up-schema'
 
 export function SignUpForm() {
-  const router = useRouter()
   const { dictionary, language } = useLanguage()
+  const router = useRouter()
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -48,18 +47,36 @@ export function SignUpForm() {
 
   async function handleSignUp(data: SignUpFormValues) {
     try {
-      await signUp({
+      const result = await signUp({
         name: data.name,
         email: data.email,
         password: data.password,
       })
 
-      toast.success(dictionary.accountCreatedSuccessfully)
-      router.push(`/${language}/sign-in`)
-    } catch (err) {
-      if (err instanceof AxiosError && err.response?.status === 400)
-        return toast.error(dictionary.userAlreadyExists)
-
+      if ('message' in result) {
+        switch (result.message) {
+          case 'Validation error': {
+            if (result.errors) {
+              Object.entries(result.errors).forEach(([field, messages]) => {
+                if (field === 'email' || field === 'password') {
+                  form.setError(field, {
+                    message: messages?.[0] || '',
+                  })
+                }
+              })
+            }
+            return
+          }
+          case 'User with same email already exists': {
+            return toast.error(dictionary.emailAlreadyInUse)
+          }
+          default: {
+            router.push(`/${language}/sign-in`)
+            return toast.success(dictionary.accountCreatedSuccessfully)
+          }
+        }
+      }
+    } catch {
       return toast.error(dictionary.unexpectedError)
     }
   }
@@ -82,7 +99,7 @@ export function SignUpForm() {
           >
             <FormItem>
               <Label htmlFor="name" className="font-poppins font-semibold">
-                {dictionary.namePlaceholder}
+                {dictionary.name}
               </Label>
               <FormField
                 control={form.control}
@@ -156,7 +173,7 @@ export function SignUpForm() {
                               variant="outline"
                               onClick={() => setShowPassword((prev) => !prev)}
                               type="button"
-                              data-testId="toggle-password"
+                              data-testid="toggle-password"
                             >
                               {showPassword ? (
                                 <Eye size={16} />

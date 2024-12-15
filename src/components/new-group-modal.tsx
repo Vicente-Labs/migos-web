@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
 
-import { createGroup } from '@/actions/groups/create-group'
+import { createGroupAction } from '@/actions/groups/create-group'
 import {
   Dialog,
   DialogContent,
@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/dialog'
 import { useGroupModalState } from '@/context/group-modal'
 import { useLanguage } from '@/context/language'
+import { useSession } from '@/context/session'
 import type { Dictionary } from '@/utils/dictionaries'
 
 import { NewGroupFormFields } from './new-group-form-fields'
@@ -77,9 +78,11 @@ export function NewGroupModal() {
 
   const queryClient = useQueryClient()
 
+  const { token } = useSession()
+
   async function onSubmit(values: FormValues) {
     try {
-      const { id } = await createGroup({
+      const result = await createGroupAction({
         data: {
           name: values.name.trim(),
           budget: values.budget,
@@ -89,24 +92,42 @@ export function NewGroupModal() {
           endDate: values.endDate.toISOString(),
           avatarUrl: values.avatarUrl?.trim(),
         },
+        token,
       })
+
+      if (!('id' in result)) {
+        switch (result.message) {
+          case 'Validation error': {
+            if (result.errors) {
+              Object.entries(result.errors).forEach(([field, messages]) => {
+                if (!field.includes('root')) {
+                  return form.setError(field as keyof FormValues, {
+                    message: messages?.[0] || '',
+                  })
+                }
+              })
+            }
+            return
+          }
+          default:
+            return toast.error(dictionary.unexpectedError)
+        }
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['groups'] })
 
       toast.success(`${values.name} group created successfully!`, {
         action: {
           label: 'Go to group',
           onClick: () => {
-            router.push(`/${language}/groups/${id}`)
+            router.push(`/${language}/groups/${result.id}`)
           },
         },
       })
 
-      queryClient.invalidateQueries({
-        queryKey: ['groups'],
-      })
-
       form.reset()
       setIsNewGroupModalOpen(false)
-      setStep(1)
+      return setStep(1)
     } catch (error) {
       if (error instanceof Error) {
         form.setError('root', {

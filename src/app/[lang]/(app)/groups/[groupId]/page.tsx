@@ -1,10 +1,11 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { redirect, useParams } from 'next/navigation'
 
 import { useSession } from '@/context/session'
-import { useGetGroupsGroupId } from '@/http/group'
+import { getGroup } from '@/http/groups/get-group'
 import { animations } from '@/utils/animations'
 
 import { GroupHeader } from './_components/_group-header'
@@ -17,7 +18,12 @@ export default function GroupPage() {
 
   if (!user) redirect('/')
 
-  const { data, isPending } = useGetGroupsGroupId(groupId)
+  const { data, isPending } = useQuery({
+    queryKey: ['group', groupId],
+    queryFn: () => getGroup({ groupId }),
+  })
+
+  if (data && !('group' in data)) redirect('/')
 
   return (
     <motion.main

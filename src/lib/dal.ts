@@ -2,7 +2,7 @@ import 'server-only'
 
 import { cookies } from 'next/headers'
 
-import { getMe } from '@/http/geral'
+import { getMe } from '@/http/geral/get-me'
 import { decrypt } from '@/lib/session'
 import { AXIOS_INSTANCE } from '@/services/axios-instance'
 
@@ -14,8 +14,11 @@ export const verifySession = async () => {
     AXIOS_INSTANCE.defaults.headers.Authorization = `Bearer ${session.token}`
 
     try {
-      const { user } = await getMe()
-      return { token: session.token, user }
+      const result = await getMe()
+
+      if (!('user' in result)) return
+
+      return { token: session.token, user: result.user }
     } catch {
       return undefined
     }

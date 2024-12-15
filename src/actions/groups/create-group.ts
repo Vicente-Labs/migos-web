@@ -1,15 +1,22 @@
 'use server'
 
-import { postGroups, PostGroupsMutationBody } from '@/http/group'
+import { createGroup, CreateGroupProps } from '@/http/groups/create-group'
+import { AXIOS_INSTANCE } from '@/services/axios-instance'
 
 type CreateGroupInput = {
-  data: PostGroupsMutationBody
+  data: CreateGroupProps
+  token?: string
 }
 
-export async function createGroup({ data }: CreateGroupInput) {
-  const { id, message } = await postGroups({ ...data })
+export async function createGroupAction({
+  data,
+  token = '',
+}: CreateGroupInput) {
+  AXIOS_INSTANCE.defaults.headers.Authorization = `Bearer ${token}`
 
-  if (message && !id) throw new Error(message)
+  const result = await createGroup({ ...data })
 
-  return { id, message }
+  if (!('id' in result)) return result
+
+  return result
 }

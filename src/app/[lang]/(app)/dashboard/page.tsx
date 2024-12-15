@@ -1,5 +1,6 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { motion } from 'framer-motion'
 import { CalendarIcon, GiftIcon, Users } from 'lucide-react'
@@ -10,7 +11,8 @@ import { redirect } from 'next/navigation'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useLanguage } from '@/context/language'
 import { useSession } from '@/context/session'
-import { useGetGroups } from '@/http/group'
+import { fetchGroups } from '@/http/groups/fetch-groups'
+// import { useGetGroups } from '@/http/group'
 import { locale } from '@/utils/date-locale'
 
 export default function Dashboard() {
@@ -20,11 +22,31 @@ export default function Dashboard() {
 
   if (!user) redirect('/')
 
-  const { data, isPending } = useGetGroups({
-    query: {
-      queryKey: ['groups'],
-    },
+  const { data, isPending } = useQuery({
+    queryKey: ['groups'],
+    queryFn: () => fetchGroups(),
   })
+
+  if (data && !('groups' in data))
+    return (
+      <div className="flex flex-col items-center justify-center w-full gap-4 py-12 h-full">
+        <h2 className="text-foreground font-cooperBlack text-2xl">
+          You are not yet part of a group
+        </h2>
+        <p className="text-muted-foreground font-poppins text-center text-sm">
+          To create a new group, click on the "new group" button above.
+        </p>
+
+        <div className="relative size-[300px] lg:size-[500px] ml-12">
+          <Image
+            src="/snow-man.png"
+            alt="Gifts"
+            fill
+            className="object-contain"
+          />
+        </div>
+      </div>
+    )
 
   return (
     <main className="p-3 sm:p-4 lg:p-6 2xl:p-8 flex flex-col justify-center gap-4 sm:gap-6 lg:gap-8 2xl:gap-12 w-full max-w-[1400px] min-h-[80vh] mx-auto">

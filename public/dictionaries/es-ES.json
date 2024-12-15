@@ -110,5 +110,11 @@
   "welcomeBack": "Bienvenido de nuevo",
   "welcomeIn": "Bienvenido en Migos",
   "accountCreatedSuccessfully": "¡Cuenta creada con éxito!",
-  "unexpectedError": "Ocurrió un error inesperado. Por favor, inténtelo de nuevo."
+  "unexpectedError": "Ocurrió un error inesperado. Por favor, inténtelo de nuevo.",
+  "emailAlreadyInUse": "Email ya en uso",
+  "signedInSuccessfully": "Sesión iniciada con éxito!",
+  "perPerson": "por persona",
+  "setABudgetToHelpGuideGiftChoices": "Define un presupuesto para ayudar a guiar las elecciones de regalos",
+  "secretMatch": "Amigo Secreto",
+  "announcements": "Anuncios"
 }

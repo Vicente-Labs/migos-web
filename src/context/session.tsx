@@ -18,6 +18,7 @@ type SessionContextProviderProps = PropsWithChildren & {
 
 type SessionContext = {
   user: User
+  token: string | undefined
 }
 
 export const SessionContext = createContext({} as SessionContext)
@@ -27,21 +28,24 @@ export const SessionContextProvider = ({
   initialSession,
 }: SessionContextProviderProps) => {
   const [user, setUser] = useState<User>(initialSession?.user)
+  const [token, setToken] = useState<string | undefined>(initialSession?.token)
 
   useEffect(() => {
     if (!initialSession) {
       setUser(undefined)
+      setToken(undefined)
       AXIOS_INSTANCE.defaults.headers.Authorization = ''
 
       return
     }
 
     setUser(initialSession.user)
+    setToken(initialSession.token)
     AXIOS_INSTANCE.defaults.headers.Authorization = `Bearer ${initialSession.token}`
   }, [initialSession])
 
   return (
-    <SessionContext.Provider value={{ user }}>
+    <SessionContext.Provider value={{ user, token }}>
       {children}
     </SessionContext.Provider>
   )

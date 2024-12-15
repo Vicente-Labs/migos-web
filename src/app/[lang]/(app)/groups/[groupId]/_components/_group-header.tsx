@@ -1,5 +1,6 @@
 'use client'
 
+import { useMutation } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { CloverIcon, CogIcon, Loader2, TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
@@ -8,8 +9,8 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useLanguage } from '@/context/language'
-import type { GetGroupsGroupId200 } from '@/http/endpoints.schemas'
-import { usePatchGroupsGroupIdGenerateMatches } from '@/http/group'
+import { generateMatches } from '@/http/groups/generate-matches'
+import type { GetGroup200 } from '@/http/groups/get-group'
 import { animations } from '@/utils/animations'
 
 export function GroupHeader({
@@ -17,12 +18,13 @@ export function GroupHeader({
   data,
 }: {
   isPending: boolean
-  data: GetGroupsGroupId200 | undefined
+  data: GetGroup200 | undefined
 }) {
   const { dictionary } = useLanguage()
 
-  const { mutateAsync: generateMatches, isPending: isGeneratingMatches } =
-    usePatchGroupsGroupIdGenerateMatches()
+  const { mutateAsync, isPending: isGeneratingMatches } = useMutation({
+    mutationFn: (groupId: string) => generateMatches({ groupId }),
+  })
 
   async function handleDraw() {
     if (data) {
@@ -31,7 +33,7 @@ export function GroupHeader({
           'You need to have an even number of participants to draw',
         )
 
-      await generateMatches({ groupId: data?.group.id })
+      await mutateAsync(data.group.id)
 
       toast.success(dictionary.matchesGeneratedSuccessfully, {
         action: {
@@ -147,7 +149,7 @@ export function GroupHeader({
                 title="Delete group"
                 size="icon"
                 onClick={() => toast.info(dictionary.weAreWorkingOnItRightNow)}
-                className="hover:bg-destructive hover:text-destructive-foreground h-8 sm:h-9 lg:h-10 w-8 sm:w-9 lg:w-10"
+                className="h-8 sm:h-9 lg:h-10 w-8 sm:w-9 lg:w-10"
               >
                 <TrashIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </Button>

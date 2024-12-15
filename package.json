@@ -31,6 +31,7 @@
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/react-query": "^5.61.3",
     "@types/canvas-confetti": "^1.6.4",
+    "ajv": "^8.17.1",
     "axios": "^1.7.9",
     "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.0",

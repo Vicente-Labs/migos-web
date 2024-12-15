@@ -1,12 +1,15 @@
 'use server'
 
-import { postUsers } from '@/http/auth'
-import type { PostUsersBody } from '@/http/endpoints.schemas'
+import { signUpWithPassword } from '@/http/auth/sign-up-with-password'
 
-type SignUpParams = PostUsersBody
+type SignUpParams = {
+  name: string
+  email: string
+  password: string
+}
 
 export async function signUp({ name, email, password }: SignUpParams) {
-  const { message } = await postUsers({ name, email, password })
+  const result = await signUpWithPassword({ name, email, password })
 
-  return { message }
+  return result
 }

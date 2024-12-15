@@ -89,7 +89,7 @@
   "personalizedGiftTips": "Personalized Gift Tips",
   "personalizedGiftTipsBenefits":"Receive tailored gift suggestions for your Secret Santa group, making every present even more special.",
   "startMyAdventure": "start your Secret Santa adventure",
-  "viewMyMatch": "View my match",
+  "viewMyMatch": "view my match",
   "findOutWhoToGift": "Find out who you'll be gifting to in this group",
   "giftBudgetLimit": "Gift budget limit",
   "aboutUs": "about us",
@@ -110,5 +110,11 @@
   "welcomeBack": "Welcome Back",
   "welcomeIn": "Welcome in Migos",
   "accountCreatedSuccessfully": "Account created successfully!",
-  "unexpectedError": "An unexpected error occurred. Please try again."
+  "unexpectedError": "An unexpected error occurred. Please try again.",
+  "emailAlreadyInUse": "Email already in use",
+  "signedInSuccessfully": "Signed in successfully!",
+  "perPerson": "per person",
+  "setABudgetToHelpGuideGiftChoices": "Set a budget to help guide gift choices",
+  "secretMatch": "Secret Match",
+  "announcements": "Announcements"
 }

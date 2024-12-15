@@ -1,5 +1,3 @@
-'use client'
-
 import { motion } from 'framer-motion'
 import {
   BellIcon,
@@ -14,58 +12,58 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useLanguage } from '@/context/language'
-import type { GetGroupsGroupId200 } from '@/http/endpoints.schemas'
+import type { GetGroup200 } from '@/http/groups/get-group'
 import { animations } from '@/utils/animations'
 
 export function GroupInfo({
   data,
   isPending,
 }: {
-  data: GetGroupsGroupId200 | undefined
+  data: GetGroup200 | undefined
   isPending: boolean
 }) {
   const { dictionary } = useLanguage()
 
   return (
-    <div className="w-full lg:w-3/4 2xl:w-3/4 gap-[1.2rem] lg:gap-[1.5rem] 2xl:gap-[3rem] flex flex-col h-full">
+    <div className="w-full lg:w-3/4 flex flex-col gap-4">
       <motion.div
         variants={animations.item}
-        className="flex flex-col lg:flex-row gap-4 lg:gap-6 2xl:gap-10"
+        className="flex flex-col lg:flex-row gap-4"
       >
-        <Card className="w-full lg:w-2/3 shadow-md rounded-lg">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 2xl:pb-6">
-            <CardTitle className="font-poppins text-base lg:text-lg 2xl:text-2xl flex items-center gap-2 2xl:gap-4">
-              <GiftIcon className="h-4 w-4 lg:h-5 lg:w-5 2xl:h-8 2xl:w-8 text-primary" />
+        <Card className="w-full lg:w-2/3 shadow-md rounded-lg h-[140px]">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-3 h-[48px]">
+            <CardTitle className="font-poppins text-sm flex items-center gap-2">
+              <GiftIcon className="h-4 w-4 text-primary" />
               {dictionary.giftBudgetLimit}
             </CardTitle>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 2xl:h-12 2xl:w-12"
+              className="h-8 w-8"
               onClick={() => toast.info(dictionary.weAreWorkingOnItRightNow)}
             >
-              <PencilIcon className="h-4 w-4 2xl:h-6 2xl:w-6" />
+              <PencilIcon className="h-4 w-4" />
             </Button>
           </CardHeader>
-          <CardContent className="flex flex-col justify-between 2xl:py-8">
-            <div className="flex flex-col items-end gap-1 2xl:gap-3">
+          <CardContent className="p-3 h-[92px]">
+            <div className="flex flex-col items-end gap-1">
               {isPending ? (
-                <div className="flex flex-col items-end gap-2 2xl:gap-4">
-                  <Skeleton className="h-8 lg:h-10 2xl:h-14 w-[150px] 2xl:w-[250px]" />
-                  <Skeleton className="h-3 lg:h-4 2xl:h-6 w-[200px] 2xl:w-[300px]" />
+                <div className="flex flex-col items-end gap-2">
+                  <Skeleton className="h-8 w-[150px]" />
+                  <Skeleton className="h-3 w-[200px]" />
                 </div>
               ) : (
                 <>
-                  <div className="flex items-baseline gap-2 2xl:gap-3">
-                    <span className="text-2xl lg:text-4xl 2xl:text-6xl font-semibold tracking-tight">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-semibold tracking-tight">
                       R$ {data?.group.budget?.toLocaleString() ?? 0}
                     </span>
-                    <span className="text-xs lg:text-sm 2xl:text-xl text-muted-foreground">
-                      /per person
+                    <span className="text-xs text-muted-foreground">
+                      /{dictionary.perPerson}
                     </span>
                   </div>
-                  <span className="text-xs lg:text-sm 2xl:text-lg text-muted-foreground">
-                    Set a budget to help guide gift choices
+                  <span className="text-xs text-muted-foreground">
+                    {dictionary.setABudgetToHelpGuideGiftChoices}
                   </span>
                 </>
               )}
@@ -73,33 +71,33 @@ export function GroupInfo({
           </CardContent>
         </Card>
 
-        <Card className="w-full lg:w-1/3 shadow-md rounded-lg">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 2xl:pb-6">
-            <CardTitle className="font-poppins text-base lg:text-lg 2xl:text-2xl flex items-center gap-2 2xl:gap-4">
-              <HandHeart className="h-4 w-4 lg:h-5 lg:w-5 2xl:h-8 2xl:w-8 text-primary" />
-              Secret Match
+        <Card className="w-full lg:w-1/3 shadow-md rounded-lg h-[140px]">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-3 h-[48px]">
+            <CardTitle className="font-poppins text-sm flex items-center gap-2">
+              <HandHeart className="h-4 w-4 text-primary" />
+              {dictionary.secretMatch}
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col gap-1 2xl:gap-3 justify-between 2xl:py-8">
+          <CardContent className="p-3 h-[92px]">
             {isPending ? (
-              <div className="flex flex-col gap-2 2xl:gap-4">
-                <Skeleton className="h-4 2xl:h-6 w-[200px] 2xl:w-[300px]" />
-                <Skeleton className="h-9 2xl:h-14 w-full" />
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-8 w-full" />
               </div>
             ) : (
-              <div className="flex flex-col gap-2 2xl:gap-8">
-                <p className="text-sm 2xl:text-lg text-muted-foreground">
+              <div className="flex flex-col gap-2">
+                <p className="text-xs text-muted-foreground">
                   {dictionary.findOutWhoToGift}
                 </p>
                 <Button
                   id="view-my-match"
                   variant="default"
-                  className="w-full gap-2 2xl:text-xl"
+                  className="w-full gap-2 h-8 text-xs"
                   onClick={() =>
                     toast.info(dictionary.weAreWorkingOnItRightNow)
                   }
                 >
-                  <EyeIcon className="h-4 w-4 2xl:h-6 2xl:w-6" />
+                  <EyeIcon className="h-4 w-4" />
                   {dictionary.viewMyMatch}
                 </Button>
               </div>
@@ -109,26 +107,24 @@ export function GroupInfo({
       </motion.div>
 
       <motion.div variants={animations.item}>
-        <Card className="w-full shadow-md rounded-lg">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 2xl:pb-6">
-            <CardTitle className="font-poppins text-base lg:text-lg 2xl:text-2xl flex items-center gap-2 2xl:gap-4">
-              <BellIcon className="h-4 w-4 lg:h-5 lg:w-5 2xl:h-8 2xl:w-8 text-primary" />
-              Announcements
+        <Card className="w-full shadow-md rounded-lg h-[140px]">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-3 h-[48px]">
+            <CardTitle className="font-poppins text-sm flex items-center gap-2">
+              <BellIcon className="h-4 w-4 text-primary" />
+              {dictionary.announcements}
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col gap-1 2xl:gap-3 2xl:py-8">
+          <CardContent className="p-3 h-[92px]">
             {isPending ? (
-              <div className="flex flex-col gap-2 2xl:gap-4">
-                <Skeleton className="h-4 2xl:h-6 w-[200px] 2xl:w-[300px]" />
-                <Skeleton className="h-9 2xl:h-14 w-full" />
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-8 w-full" />
               </div>
             ) : (
-              <>
-                <p className="text-sm 2xl:text-lg text-muted-foreground">
-                  No announcements yet. Stay tuned for updates from the group
-                  owner.
-                </p>
-              </>
+              <p className="text-xs text-muted-foreground">
+                No announcements yet. Stay tuned for updates from the group
+                owner.
+              </p>
             )}
           </CardContent>
         </Card>
