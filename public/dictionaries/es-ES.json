@@ -116,5 +116,7 @@
   "perPerson": "por persona",
   "setABudgetToHelpGuideGiftChoices": "Define un presupuesto para ayudar a guiar las elecciones de regalos",
   "secretMatch": "Amigo Secreto",
-  "announcements": "Anuncios"
+  "announcements": "Anuncios",
+  "drawParticipantsDescription": "Esta acción sorteará aleatoriamente a todos los participantes del grupo para la troca de regalos. Asegúrate de que todos hayan participado antes de continuar.",
+  "cancel": "cancelar"
 }

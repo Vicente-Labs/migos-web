@@ -116,5 +116,7 @@
   "perPerson": "per person",
   "setABudgetToHelpGuideGiftChoices": "Set a budget to help guide gift choices",
   "secretMatch": "Secret Match",
-  "announcements": "Announcements"
+  "announcements": "Announcements",
+  "drawParticipantsDescription": "This action will randomly match all participants in the group for the gift exchange. Make sure everyone has joined before proceeding.",
+  "cancel": "cancel"
 }

@@ -3,6 +3,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { CloverIcon, CogIcon, Loader2, TrashIcon } from 'lucide-react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -13,6 +14,8 @@ import { generateMatches } from '@/http/groups/generate-matches'
 import type { GetGroup200 } from '@/http/groups/get-group'
 import { animations } from '@/utils/animations'
 
+import { ConfirmDrawParticipantsModal } from './_confirm-draw-participants-modal'
+
 export function GroupHeader({
   isPending,
   data,
@@ -20,6 +23,11 @@ export function GroupHeader({
   isPending: boolean
   data: GetGroup200 | undefined
 }) {
+  const [
+    isConfirmDrawParticipantsModalOpen,
+    setIsConfirmDrawParticipantsModalOpen,
+  ] = useState(false)
+
   const { dictionary } = useLanguage()
 
   const { mutateAsync, isPending: isGeneratingMatches } = useMutation({
@@ -119,7 +127,7 @@ export function GroupHeader({
                 className="gap-2 text-xs sm:text-sm lg:text-base h-8 sm:h-9 lg:h-10"
                 disabled={isGeneratingMatches}
                 title={'draw participants'}
-                onClick={handleDraw}
+                onClick={() => setIsConfirmDrawParticipantsModalOpen(true)}
               >
                 <CloverIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 {isGeneratingMatches ? (
@@ -157,6 +165,13 @@ export function GroupHeader({
           )}
         </motion.div>
       </div>
+
+      <ConfirmDrawParticipantsModal
+        isOpen={isConfirmDrawParticipantsModalOpen}
+        onOpenChange={setIsConfirmDrawParticipantsModalOpen}
+        onConfirm={handleDraw}
+        isLoading={isGeneratingMatches}
+      />
     </>
   )
 }
