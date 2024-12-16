@@ -46,6 +46,8 @@ export function SignUpForm() {
   } = form
 
   async function handleSignUp(data: SignUpFormValues) {
+    console.log('Data', data)
+
     try {
       const result = await signUp({
         name: data.name,
