@@ -1,5 +1,5 @@
 import { Footer } from '@/components/footer'
-// import Header from '@/components/header'
+import Header from '@/components/header'
 import { NewGroupModal } from '@/components/new-group-modal'
 import { AppWrapper } from '@/context/app'
 import { GroupModalContextProvider } from '@/context/group-modal'
@@ -32,7 +32,7 @@ export default async function RootLayout({
     <AppWrapper>
       <LanguageContextProvider language={lang} dictionary={dictionary}>
         <GroupModalContextProvider>
-          {/* <Header /> */}
+          <Header />
 
           {children}
 
