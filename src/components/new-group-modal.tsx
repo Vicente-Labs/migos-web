@@ -2,8 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
-import { AnimatePresence, motion } from 'framer-motion'
-import { CheckCircle, ChevronRight, Loader2 } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { CheckCircle, ChevronRight, Loader2, PlusCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -21,6 +21,7 @@ import {
 import { useGroupModalState } from '@/context/group-modal'
 import { useLanguage } from '@/context/language'
 import { useSession } from '@/context/session'
+import { animations } from '@/utils/animations'
 import type { Dictionary } from '@/utils/dictionaries'
 
 import { NewGroupFormFields } from './new-group-form-fields'
@@ -34,7 +35,7 @@ const formSchema = (dictionary: Dictionary) =>
       currency: z.enum(['USD', 'EUR', 'BRL']),
       budget: z.coerce
         .number()
-        .min(0, { message: dictionary.budgetMustBeGreaterThanZero })
+        .min(1, { message: dictionary.budgetMustBeGreaterThanZero })
         .multipleOf(0.01, {
           message: dictionary.budgetMustHaveAtMost2Decimals,
         }),
@@ -161,25 +162,26 @@ export function NewGroupModal() {
 
   return (
     <Dialog open={isNewGroupModalOpen} onOpenChange={setIsNewGroupModalOpen}>
-      <DialogContent
-        onCloseAutoFocus={(e) => e.preventDefault()}
-        onOpenAutoFocus={(e) => e.preventDefault()}
-        autoFocus={false}
-        className="w-[90vw] max-w-[500px] sm:w-full"
-      >
-        <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl md:text-2xl font-cooperBlack">
-            Create a new group
-          </DialogTitle>
-          <DialogDescription className="text-xs sm:text-sm md:text-base flex flex-row gap-1">
-            To start your Secret Santa, you just need to add a name, budget and
-            when it will occur.
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-md">
+        <motion.div
+          variants={animations.container}
+          initial="hidden"
+          animate="show"
+          className="flex flex-col gap-4"
+        >
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <PlusCircle className="h-5 w-5 text-primary" />
+              Create a new group
+            </DialogTitle>
+            <DialogDescription>
+              To start your Secret Santa, you just need to add a name, budget
+              and when it will occur.
+            </DialogDescription>
+          </DialogHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <AnimatePresence mode="wait">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <motion.div
                 key={step}
                 initial={{ opacity: 0, x: step === 1 ? -20 : 20 }}
@@ -189,51 +191,44 @@ export function NewGroupModal() {
               >
                 <NewGroupFormFields form={form} step={step} />
               </motion.div>
-            </AnimatePresence>
 
-            <div className="flex flex-col gap-2 sm:gap-4 w-full pt-2">
-              <motion.div
-                className="flex flex-col sm:flex-row gap-2 sm:gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleBackStep}
-                  className="w-full text-xs sm:text-sm"
-                  disabled={form.formState.isSubmitting}
-                >
-                  {step === 1 ? 'Cancel' : 'Back'}
-                </Button>
+              <div className="flex flex-col gap-2 sm:gap-4 w-full pt-2">
+                <div className="flex gap-2 sm:gap-0 w-full">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleBackStep}
+                    disabled={form.formState.isSubmitting}
+                  >
+                    {step === 1 ? 'Cancel' : 'Back'}
+                  </Button>
 
-                <Button
-                  type="button"
-                  onClick={handleNextStep}
-                  className="w-full text-xs sm:text-sm"
-                  disabled={form.formState.isSubmitting}
-                >
-                  {step === 1 ? (
-                    <>
-                      Next
-                      <ChevronRight className="size-3 sm:size-4" />
-                    </>
-                  ) : form.formState.isSubmitting ? (
-                    <>
-                      <Loader2 className="size-3 sm:size-4 animate-spin" />
-                    </>
-                  ) : (
-                    <>
-                      Create Group
-                      <CheckCircle className="size-3 sm:size-4" />
-                    </>
-                  )}
-                </Button>
-              </motion.div>
-            </div>
-          </form>
-        </Form>
+                  <Button
+                    type="button"
+                    onClick={handleNextStep}
+                    disabled={form.formState.isSubmitting}
+                    className="gap-2 w-full"
+                  >
+                    {form.formState.isSubmitting && (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    )}
+                    {step === 1 ? (
+                      <>
+                        Next
+                        <ChevronRight className="h-4 w-4" />
+                      </>
+                    ) : (
+                      <>
+                        Create Group
+                        <CheckCircle className="h-4 w-4" />
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </Form>
+        </motion.div>
       </DialogContent>
     </Dialog>
   )

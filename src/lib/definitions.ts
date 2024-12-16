@@ -1,8 +1,6 @@
-import {
-  GetAuthenticateGoogle200,
-  type PostAuthenticatePassword200,
-} from '@/http/endpoints.schemas'
+import type { SignInWithGoogle200Response } from '@/http/auth/sign-in-with-google'
+import type { SignInWithPassword200Response } from '@/http/auth/sign-in-with-passoword'
 
 export type SessionPayload =
-  | Pick<PostAuthenticatePassword200, 'token'>
-  | Pick<GetAuthenticateGoogle200, 'token'>
+  | Pick<SignInWithGoogle200Response, 'token'>
+  | Pick<SignInWithPassword200Response, 'token'>

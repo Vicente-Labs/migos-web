@@ -8,12 +8,16 @@ const signInWithGoogleRequestSchema = z.object({
 
 type SignInWithGoogleRequest = z.infer<typeof signInWithGoogleRequestSchema>
 
-const signUp200ResponseSchema = z.object({
+const signInWithGoogle200ResponseSchema = z.object({
   message: z.literal('Authenticated successfully'),
   token: z.string(),
 })
 
-const signUp400ResponseSchema = z.object({
+export type SignInWithGoogle200Response = z.infer<
+  typeof signInWithGoogle200ResponseSchema
+>
+
+const signInWithGoogle400ResponseSchema = z.object({
   message: z.enum([
     'Validation error',
     'User info not found',
@@ -27,17 +31,19 @@ const signUp400ResponseSchema = z.object({
     .optional(),
 })
 
-const signUp401ResponseSchema = z.object({
+const signInWithGoogle401ResponseSchema = z.object({
   message: z.literal('Invalid credentials'),
 })
 
-const signUpResponseSchema = z.union([
-  signUp200ResponseSchema,
-  signUp400ResponseSchema,
-  signUp401ResponseSchema,
+const signInWithGoogleResponseSchema = z.union([
+  signInWithGoogle200ResponseSchema,
+  signInWithGoogle400ResponseSchema,
+  signInWithGoogle401ResponseSchema,
 ])
 
-type SignInWithGoogleResponse = z.infer<typeof signUpResponseSchema>
+export type SignInWithGoogleResponse = z.infer<
+  typeof signInWithGoogleResponseSchema
+>
 
 export async function signIpWithGoogle({
   code,

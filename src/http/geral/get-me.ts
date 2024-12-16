@@ -11,6 +11,8 @@ const userSchema = z.object({
   createdAt: z.date(),
 })
 
+export type User = z.infer<typeof userSchema>
+
 const signUp200ResponseSchema = z.object({
   message: z.literal('User found'),
   user: userSchema,

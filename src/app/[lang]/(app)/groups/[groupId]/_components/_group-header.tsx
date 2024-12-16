@@ -15,6 +15,7 @@ import type { GetGroup200 } from '@/http/groups/get-group'
 import { animations } from '@/utils/animations'
 
 import { ConfirmDrawParticipantsModal } from './_confirm-draw-participants-modal'
+import { GroupsConfigModal } from './_group-config-modal'
 
 export function GroupHeader({
   isPending,
@@ -27,6 +28,7 @@ export function GroupHeader({
     isConfirmDrawParticipantsModalOpen,
     setIsConfirmDrawParticipantsModalOpen,
   ] = useState(false)
+  const [isGroupsConfigModalOpen, setIsGroupsConfigModalOpen] = useState(false)
 
   const { dictionary } = useLanguage()
 
@@ -146,7 +148,7 @@ export function GroupHeader({
                 variant="outline"
                 title="Group settings"
                 size="icon"
-                onClick={() => toast.info(dictionary.weAreWorkingOnItRightNow)}
+                onClick={() => setIsGroupsConfigModalOpen(true)}
                 className="h-8 sm:h-9 lg:h-10 w-8 sm:w-9 lg:w-10"
               >
                 <CogIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -171,6 +173,11 @@ export function GroupHeader({
         onOpenChange={setIsConfirmDrawParticipantsModalOpen}
         onConfirm={handleDraw}
         isLoading={isGeneratingMatches}
+      />
+
+      <GroupsConfigModal
+        isOpen={isGroupsConfigModalOpen}
+        onOpenChange={setIsGroupsConfigModalOpen}
       />
     </>
   )

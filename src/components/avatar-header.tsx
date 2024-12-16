@@ -4,7 +4,7 @@ import { LogOut } from 'lucide-react'
 
 import { logout } from '@/actions/auth/logout'
 import { useLanguage } from '@/context/language'
-import type { User } from '@/types/user'
+import type { User } from '@/http/geral/get-me'
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import {

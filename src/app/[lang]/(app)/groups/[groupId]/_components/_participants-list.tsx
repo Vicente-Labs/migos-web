@@ -107,7 +107,7 @@ export function ParticipantsList({
         <CardHeader className="p-3 h-[68px]">
           <CardTitle className="flex items-center gap-1.5 font-poppins text-sm">
             <UsersIcon className="h-3.5 w-3.5 text-primary" />
-            Participants
+            {dictionary.participants}
             {!isPending && (
               <span className="text-[10px] font-normal text-muted-foreground">
                 ({participantCount})
@@ -131,7 +131,7 @@ export function ParticipantsList({
             onClick={() => toast.info(dictionary.weAreWorkingOnItRightNow)}
           >
             <PlusIcon className="h-3 w-3" />
-            Add participants
+            {dictionary.addParticipants}
           </Button>
         </CardContent>
       </Card>

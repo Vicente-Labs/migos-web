@@ -8,16 +8,16 @@ import {
   useState,
 } from 'react'
 
+import type { User } from '@/http/geral/get-me'
 import type { verifySession } from '@/lib/dal'
 import { AXIOS_INSTANCE } from '@/services/axios-instance'
-import type { User } from '@/types/user'
 
 type SessionContextProviderProps = PropsWithChildren & {
   initialSession: Awaited<ReturnType<typeof verifySession>>
 }
 
 type SessionContext = {
-  user: User
+  user: User | undefined
   token: string | undefined
 }
 
@@ -27,7 +27,7 @@ export const SessionContextProvider = ({
   children,
   initialSession,
 }: SessionContextProviderProps) => {
-  const [user, setUser] = useState<User>(initialSession?.user)
+  const [user, setUser] = useState<User | undefined>(initialSession?.user)
   const [token, setToken] = useState<string | undefined>(initialSession?.token)
 
   useEffect(() => {

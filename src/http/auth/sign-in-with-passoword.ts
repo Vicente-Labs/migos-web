@@ -9,12 +9,12 @@ const signInWithPasswordRequestSchema = z.object({
 
 type SignInWithPasswordRequest = z.infer<typeof signInWithPasswordRequestSchema>
 
-const signUp200ResponseSchema = z.object({
+const signInWithPassword200ResponseSchema = z.object({
   message: z.literal('Authenticated successfully'),
   token: z.string(),
 })
 
-const signUp400ResponseSchema = z.object({
+const signInWithPassword400ResponseSchema = z.object({
   message: z.literal('Validation error'),
   errors: z
     .object({
@@ -24,21 +24,29 @@ const signUp400ResponseSchema = z.object({
     .optional(),
 })
 
-const signUp401ResponseSchema = z.object({
+const signInWithPassword401ResponseSchema = z.object({
   message: z.literal('Invalid credentials'),
 })
 
-export type SignUp200ResponseSchema = z.infer<typeof signUp200ResponseSchema>
-export type SignUp400ResponseSchema = z.infer<typeof signUp400ResponseSchema>
-export type SignUp401ResponseSchema = z.infer<typeof signUp401ResponseSchema>
+export type SignInWithPassword200Response = z.infer<
+  typeof signInWithPassword200ResponseSchema
+>
+export type SignInWithPassword400Response = z.infer<
+  typeof signInWithPassword400ResponseSchema
+>
+export type SignInWithPassword401Response = z.infer<
+  typeof signInWithPassword401ResponseSchema
+>
 
-const signUpResponseSchema = z.union([
-  signUp200ResponseSchema,
-  signUp400ResponseSchema,
-  signUp401ResponseSchema,
+const signInWithPasswordResponseSchema = z.union([
+  signInWithPassword200ResponseSchema,
+  signInWithPassword400ResponseSchema,
+  signInWithPassword401ResponseSchema,
 ])
 
-type SignInWithPasswordResponse = z.infer<typeof signUpResponseSchema>
+export type SignInWithPasswordResponse = z.infer<
+  typeof signInWithPasswordResponseSchema
+>
 
 export async function signInWithPassword({
   email,
