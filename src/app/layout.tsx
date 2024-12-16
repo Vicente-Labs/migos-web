@@ -5,8 +5,8 @@ import { Inter, Poppins } from 'next/font/google'
 import localFont from 'next/font/local'
 
 import { Toaster } from '@/components/ui/sonner'
-import { SessionContextProvider } from '@/context/session'
-import { verifySession } from '@/lib/dal'
+// import { SessionContextProvider } from '@/context/session'
+// import { verifySession } from '@/lib/dal'
 import { cn } from '@/lib/utils'
 import type { Language } from '@/types/languages'
 
@@ -44,7 +44,7 @@ export default async function RootLayout({
   const resolvedParams = await params
   const lang = resolvedParams.lang as Language
 
-  const session = await verifySession()
+  // const session = await verifySession()
 
   return (
     <html
@@ -57,17 +57,17 @@ export default async function RootLayout({
       </head>
 
       <body className="text-smooth overflow-x-hidden antialiased scroll-smooth">
-        <SessionContextProvider initialSession={session}>
-          <Toaster
-            richColors
-            closeButton
-            position="bottom-right"
-            expand={false}
-            theme="light"
-          />
+        {/* <SessionContextProvider initialSession={session}> */}
+        <Toaster
+          richColors
+          closeButton
+          position="bottom-right"
+          expand={false}
+          theme="light"
+        />
 
-          {children}
-        </SessionContextProvider>
+        {children}
+        {/* </SessionContextProvider> */}
       </body>
     </html>
   )
