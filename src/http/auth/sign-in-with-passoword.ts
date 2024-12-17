@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import { z } from 'zod'
 
 import { axiosInstance } from '@/services/axios-instance'
@@ -52,14 +53,26 @@ export async function signInWithPassword({
   email,
   password,
 }: SignInWithPasswordRequest): Promise<SignInWithPasswordResponse> {
-  const result = await axiosInstance<SignInWithPasswordResponse>({
-    url: 'authenticate/password',
-    method: 'POST',
-    data: {
-      email,
-      password,
-    },
-  })
+  try {
+    const result = await axiosInstance<SignInWithPasswordResponse>({
+      url: 'authenticate/password',
+      method: 'POST',
+      data: {
+        email,
+        password,
+      },
+    })
 
-  return result
+    return result
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 401)
+        return signInWithPassword401ResponseSchema.parse(error.response?.data)
+
+      if (error.response?.status === 400)
+        return signInWithPassword400ResponseSchema.parse(error.response?.data)
+    }
+
+    throw error
+  }
 }

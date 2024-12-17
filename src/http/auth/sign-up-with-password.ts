@@ -60,7 +60,8 @@ export async function signUpWithPassword({
       if (error.response?.status === 409)
         return signUp409ResponseSchema.parse(error.response?.data)
 
-      return signUp400ResponseSchema.parse(error.response?.data)
+      if (error.response?.status === 400)
+        return signUp400ResponseSchema.parse(error.response?.data)
     }
     throw error
   }
