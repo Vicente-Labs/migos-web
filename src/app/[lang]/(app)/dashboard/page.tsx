@@ -57,7 +57,7 @@ export default function Dashboard() {
         transition={{ duration: 0.5, delay: 0.3 }}
         viewport={{ once: true }}
       >
-        <h1 className="font-cooperBlack text-3xl">Groups</h1>
+        <h1 className="font-cooperBlack text-3xl">groups</h1>
       </motion.div>
 
       <motion.div

@@ -176,6 +176,7 @@ export function GroupHeader({
       />
 
       <GroupsConfigModal
+        group={data?.group}
         isOpen={isGroupsConfigModalOpen}
         onOpenChange={setIsGroupsConfigModalOpen}
       />

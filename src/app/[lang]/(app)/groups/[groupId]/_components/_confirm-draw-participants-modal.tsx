@@ -49,7 +49,7 @@ export function ConfirmDrawParticipantsModal({
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter className="gap-2 sm:gap-0 w-full">
+          <DialogFooter className="flex flex-row gap-2 w-full">
             <Button
               variant="outline"
               onClick={() => onOpenChange(false)}

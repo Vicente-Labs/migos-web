@@ -99,9 +99,9 @@ export function NewGroupFormFields({
                             defaultValue="USD"
                             onValueChange={currencyField.onChange}
                           >
-                            <SelectTrigger className="w-[70px] gap-2 bg-card border border-primary rounded-md flex flex-row items-center justify-center p-2">
+                            <SelectTrigger className="w-[70px] gap-2 bg-card border hover:border-primary rounded-md flex flex-row items-center justify-center p-2 transition-all duration-300">
                               <SelectValue placeholder="$" />
-                              <ChevronDown className="size-4 text-accent-foreground" />
+                              <ChevronDown className="size-4" />
                             </SelectTrigger>
                             <SelectContent className="w-fit p-0" align="center">
                               <SelectItem value="USD">$</SelectItem>

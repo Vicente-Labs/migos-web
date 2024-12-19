@@ -192,39 +192,37 @@ export function NewGroupModal() {
                 <NewGroupFormFields form={form} step={step} />
               </motion.div>
 
-              <div className="flex flex-col gap-2 sm:gap-4 w-full pt-2">
-                <div className="flex gap-2 sm:gap-0 w-full">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleBackStep}
-                    disabled={form.formState.isSubmitting}
-                  >
-                    {step === 1 ? 'Cancel' : 'Back'}
-                  </Button>
+              <div className="flex flex-row  gap-2 sm:gap-4 w-full pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleBackStep}
+                  disabled={form.formState.isSubmitting}
+                >
+                  {step === 1 ? 'Cancel' : 'Back'}
+                </Button>
 
-                  <Button
-                    type="button"
-                    onClick={handleNextStep}
-                    disabled={form.formState.isSubmitting}
-                    className="gap-2 w-full"
-                  >
-                    {form.formState.isSubmitting && (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    )}
-                    {step === 1 ? (
-                      <>
-                        Next
-                        <ChevronRight className="h-4 w-4" />
-                      </>
-                    ) : (
-                      <>
-                        Create Group
-                        <CheckCircle className="h-4 w-4" />
-                      </>
-                    )}
-                  </Button>
-                </div>
+                <Button
+                  type="button"
+                  onClick={handleNextStep}
+                  disabled={form.formState.isSubmitting}
+                  className="gap-2 w-full"
+                >
+                  {form.formState.isSubmitting && (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  )}
+                  {step === 1 ? (
+                    <>
+                      Next
+                      <ChevronRight className="h-4 w-4" />
+                    </>
+                  ) : (
+                    <>
+                      Create Group
+                      <CheckCircle className="h-4 w-4" />
+                    </>
+                  )}
+                </Button>
               </div>
             </form>
           </Form>

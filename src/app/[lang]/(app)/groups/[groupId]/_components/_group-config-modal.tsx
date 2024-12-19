@@ -17,24 +17,33 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useLanguage } from '@/context/language'
+import type { Group } from '@/http/groups/get-group'
 import { animations } from '@/utils/animations'
 
 interface GroupsConfigModalProps {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
+  group: Group | undefined
 }
 
 export function GroupsConfigModal({
   isOpen,
   onOpenChange,
+  group,
 }: GroupsConfigModalProps) {
   const { dictionary } = useLanguage()
+  const defaultDate = new Date().toISOString().split('T')[0]
+
   const [formData, setFormData] = useState({
-    name: '',
-    budget: '',
-    description: '',
-    drawDate: '',
-    giftingDate: '',
+    name: group?.name ?? '',
+    budget: group?.budget ?? 0,
+    description: group?.description ?? '',
+    drawDate: group?.drawDate
+      ? new Date(group.drawDate).toISOString().split('T')[0]
+      : defaultDate,
+    giftingDate: group?.endDate
+      ? new Date(group.endDate).toISOString().split('T')[0]
+      : defaultDate,
   })
   const [nameError, setNameError] = useState(false)
 
@@ -130,7 +139,7 @@ export function GroupsConfigModal({
             </div>
           </div>
 
-          <DialogFooter className="gap-2 sm:gap-0">
+          <DialogFooter className="flex flex-row gap-2 sm:gap-0">
             <Button variant="outline" onClick={() => onOpenChange(false)}>
               {dictionary.cancel}
             </Button>

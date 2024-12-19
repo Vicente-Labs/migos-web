@@ -29,6 +29,8 @@ const groupSchema = z.object({
   timesMatchesGenerated: z.number(),
 })
 
+export type Group = z.infer<typeof groupSchema>
+
 const getGroup200ResponseSchema = z.object({
   message: z.literal('Group fetched successfully'),
   group: groupSchema,
